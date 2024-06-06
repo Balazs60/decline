@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Task {
 
     private Noun noun;
-    private Article article;
+    private String article;
     private Case caseType;
     private Adjective adjective;
     private boolean isPlural;
