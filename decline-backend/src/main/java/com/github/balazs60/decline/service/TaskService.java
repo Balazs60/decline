@@ -43,17 +43,19 @@ public class TaskService {
 
     public String getTaskInStringFormat() {
         Task task = createTask();
-        String article = null;
+        String article;
         String adjective;
         String noun;
         String isPlural;
         String caseType = task.getCaseType().name();
 
-        if (task.getArticle().charAt(0) == 'D') {
+        System.out.println("article first char " + task.getArticle().charAt(0));
+
+        if (task.getArticle().charAt(0) == 'd') {
             article = "D...";
-        } else if (task.getArticle().charAt(0) == 'E'){
+        } else if (task.getArticle().charAt(0) == 'e'){
             article= "E...";
-        } else if (task.getArticle().charAt(0) == 'K'){
+        } else {
             article="K...";
         }
 
@@ -75,6 +77,6 @@ public class TaskService {
             isPlural = "(Singular)";
         }
 
-        return article + " " + adjective + " " + noun + "..." + "." + " " + isPlural + " " + caseType;
+        return article + " " + adjective + " " + noun +  "." + " " + isPlural + " " + caseType;
     }
 }
