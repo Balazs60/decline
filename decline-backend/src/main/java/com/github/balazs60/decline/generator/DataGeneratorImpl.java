@@ -3,9 +3,15 @@ package com.github.balazs60.decline.generator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.balazs60.decline.model.Adjective;
+import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
+import com.github.balazs60.decline.model.articles.DefiniteArticle;
+import com.github.balazs60.decline.model.articles.IndefiniteArticle;
 import com.github.balazs60.decline.repositories.AdjectiveRepository;
+import com.github.balazs60.decline.repositories.DefiniteArticleRepository;
+import com.github.balazs60.decline.repositories.IndefiniteArticleRepository;
 import com.github.balazs60.decline.repositories.NounRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +30,20 @@ public class DataGeneratorImpl implements DataGenerator {
     private ObjectMapper mapper;
     private NounRepository nounRepository;
     private AdjectiveRepository adjectiveRepository;
+    private DefiniteArticleRepository definiteArticleRepository;
+    private IndefiniteArticleRepository indefiniteArticleRepository;
 
     public DataGeneratorImpl(
             ObjectMapper mapper,
             NounRepository nounRepository,
-            AdjectiveRepository adjectiveRepository) {
+            AdjectiveRepository adjectiveRepository,
+            DefiniteArticleRepository definiteArticleRepository,
+            IndefiniteArticleRepository indefiniteArticleRepository) {
         this.mapper = mapper;
         this.nounRepository = nounRepository;
         this.adjectiveRepository = adjectiveRepository;
+        this.definiteArticleRepository = definiteArticleRepository;
+        this.indefiniteArticleRepository = indefiniteArticleRepository;
     }
 
     @Override
@@ -88,11 +100,85 @@ public class DataGeneratorImpl implements DataGenerator {
 
     @Override
     public void seedDefiniteArticles() {
+        List<DefiniteArticle> definiteArticleList = new ArrayList<>();
 
+        DefiniteArticle nominativeDefiniteArticles = new DefiniteArticle();
+        nominativeDefiniteArticles.setCaseType(Case.NOMINATIVE);
+        nominativeDefiniteArticles.setMasculine("Der");
+        nominativeDefiniteArticles.setFeminine("Die");
+        nominativeDefiniteArticles.setNeutral("Das");
+        nominativeDefiniteArticles.setPlural("Die");
+
+        definiteArticleList.add(nominativeDefiniteArticles);
+
+        DefiniteArticle accusativeDefiniteArticles = new DefiniteArticle();
+        accusativeDefiniteArticles.setCaseType(Case.ACCUSATIVE);
+        accusativeDefiniteArticles.setMasculine("Den");
+        accusativeDefiniteArticles.setFeminine("Die");
+        accusativeDefiniteArticles.setNeutral("Das");
+        accusativeDefiniteArticles.setPlural("Die");
+
+        definiteArticleList.add(accusativeDefiniteArticles);
+
+        DefiniteArticle dativeDefiniteArticles = new DefiniteArticle();
+        dativeDefiniteArticles.setCaseType(Case.DATIVE);
+        dativeDefiniteArticles.setMasculine("Dem");
+        dativeDefiniteArticles.setFeminine("Der");
+        dativeDefiniteArticles.setNeutral("Dem");
+        dativeDefiniteArticles.setPlural("Den");
+
+        definiteArticleList.add(dativeDefiniteArticles);
+
+        DefiniteArticle genitiveDefiniteArticles = new DefiniteArticle();
+        genitiveDefiniteArticles.setCaseType(Case.GENITIVE);
+        genitiveDefiniteArticles.setMasculine("Des");
+        genitiveDefiniteArticles.setFeminine("Den");
+        genitiveDefiniteArticles.setNeutral("Des");
+        genitiveDefiniteArticles.setPlural("Der");
+
+        definiteArticleList.add(genitiveDefiniteArticles);
+        definiteArticleRepository.saveAll(definiteArticleList);
     }
 
     @Override
     public void seedIndefiniteArticles() {
+        List<IndefiniteArticle> indefiniteArticleList = new ArrayList<>();
 
+        IndefiniteArticle nominativeIndefiniteArticle = new IndefiniteArticle();
+        nominativeIndefiniteArticle.setCaseType(Case.NOMINATIVE);
+        nominativeIndefiniteArticle.setMasculine("Ein");
+        nominativeIndefiniteArticle.setFeminine("Eine");
+        nominativeIndefiniteArticle.setNeutral("Ein");
+        nominativeIndefiniteArticle.setPlural("Keine");
+
+        indefiniteArticleList.add(nominativeIndefiniteArticle);
+
+        IndefiniteArticle accusativeIndefiniteArticle = new IndefiniteArticle();
+        accusativeIndefiniteArticle.setCaseType(Case.ACCUSATIVE);
+        accusativeIndefiniteArticle.setMasculine("Einen");
+        accusativeIndefiniteArticle.setFeminine("Eine");
+        accusativeIndefiniteArticle.setNeutral("Ein");
+        accusativeIndefiniteArticle.setPlural("Keine");
+
+        indefiniteArticleList.add(accusativeIndefiniteArticle);
+
+        IndefiniteArticle dativeIndefiniteArticle = new IndefiniteArticle();
+        dativeIndefiniteArticle.setCaseType(Case.DATIVE);
+        dativeIndefiniteArticle.setMasculine("Einem");
+        dativeIndefiniteArticle.setFeminine("Einen");
+        dativeIndefiniteArticle.setNeutral("Einem");
+        dativeIndefiniteArticle.setPlural("Keinen");
+
+        indefiniteArticleList.add(dativeIndefiniteArticle);
+
+        IndefiniteArticle genitiveIndefiniteArticle = new IndefiniteArticle();
+        genitiveIndefiniteArticle.setCaseType(Case.GENITIVE);
+        genitiveIndefiniteArticle.setMasculine("Eines");
+        genitiveIndefiniteArticle.setFeminine("Einen");
+        genitiveIndefiniteArticle.setNeutral("Eines");
+        genitiveIndefiniteArticle.setPlural("Keinen");
+
+        indefiniteArticleList.add(genitiveIndefiniteArticle);
+        indefiniteArticleRepository.saveAll(indefiniteArticleList);
     }
 }

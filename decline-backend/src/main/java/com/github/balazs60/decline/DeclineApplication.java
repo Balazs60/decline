@@ -19,6 +19,8 @@ public class DeclineApplication {
 	public void seedDatabase() {
 		dataGenerator.seedNouns();
 		dataGenerator.seedAdjectives();
+		dataGenerator.seedDefiniteArticles();
+		dataGenerator.seedIndefiniteArticles();
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(DeclineApplication.class, args);

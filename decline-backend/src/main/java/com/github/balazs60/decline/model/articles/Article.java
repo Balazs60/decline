@@ -1,6 +1,7 @@
 package com.github.balazs60.decline.model.articles;
 
 import com.github.balazs60.decline.model.Case;
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class Article {
 
     private Case caseType;
