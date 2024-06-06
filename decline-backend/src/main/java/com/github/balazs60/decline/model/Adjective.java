@@ -22,9 +22,9 @@ public class Adjective {
     private Long id;
 
     private String normalAdjectiveForm;
-    private String adjectiveFromWithEEnd;
-    private String adjectiveFromWithREnd;
-    private String adjectiveFromWithMEnd;
-    private String adjectiveFromWithNEnd;
-    private String adjectiveFromWithSEnd;
+    private String adjectiveFormWithEEnd;
+    private String adjectiveFormWithREnd;
+    private String adjectiveFormWithMEnd;
+    private String adjectiveFormWithNEnd;
+    private String adjectiveFormWithSEnd;
 }
