@@ -61,14 +61,14 @@ public class TaskService {
 
         adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
 
-        if(task.getCaseType().equals(Case.GENITIVE) && task.isPlural()){
-            noun = task.getNoun().getNounFormSEnd();
+        if(task.getCaseType().equals(Case.GENITIVE) && !task.isPlural()){
+            noun = task.getNoun().getSingularGen();
         } else if (task.isPlural() && !task.getCaseType().equals(Case.DATIVE)){
-            noun = task.getNoun().getNounFormWithEEnd();
+            noun = task.getNoun().getPluralNom();
         } else if (task.isPlural() && task.getCaseType().equals(Case.DATIVE)){
-            noun = task.getNoun().getNounFormWithNEnd();
+            noun = task.getNoun().getPluralDat();
         } else {
-            noun = task.getNoun().getNormalNounForm();
+            noun = task.getNoun().getSingularNom();
         }
 
         if(task.isPlural() == true){

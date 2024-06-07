@@ -11,10 +11,8 @@ import com.github.balazs60.decline.repositories.AdjectiveRepository;
 import com.github.balazs60.decline.repositories.DefiniteArticleRepository;
 import com.github.balazs60.decline.repositories.IndefiniteArticleRepository;
 import com.github.balazs60.decline.repositories.NounRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -58,10 +56,10 @@ public class DataGeneratorImpl implements DataGenerator {
             for (List<String> noun : nouns) {
                 Noun newNoun = new Noun();
                 newNoun.setArticle(noun.get(0));
-                newNoun.setNormalNounForm(noun.get(1));
-                newNoun.setNounFormWithEEnd(noun.get(2));
-                newNoun.setNounFormWithNEnd(noun.get(3));
-                newNoun.setNounFormSEnd(noun.get(4));
+                newNoun.setSingularNom(noun.get(1));
+                newNoun.setPluralNom(noun.get(2));
+                newNoun.setPluralDat(noun.get(3));
+                newNoun.setSingularGen(noun.get(4));
                 nounsList.add(newNoun);
 
             }
