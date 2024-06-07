@@ -43,33 +43,13 @@ public class TaskService {
 
     public String getTaskInStringFormat() {
         Task task = createTask();
-        String article;
+        String article = task.getFirstCharOfTheArticle();
         String adjective;
-        String noun;
+        String noun = task.getCorrectNounForm();
         String isPlural;
         String caseType = task.getCaseType().name();
 
-        System.out.println("article first char " + task.getArticle().charAt(0));
-
-        if (task.getArticle().charAt(0) == 'd') {
-            article = "D...";
-        } else if (task.getArticle().charAt(0) == 'e'){
-            article= "E...";
-        } else {
-            article="K...";
-        }
-
         adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
-
-        if(task.getCaseType().equals(Case.GENITIVE) && !task.isPlural()){
-            noun = task.getNoun().getSingularGen();
-        } else if (task.isPlural() && !task.getCaseType().equals(Case.DATIVE)){
-            noun = task.getNoun().getPluralNom();
-        } else if (task.isPlural() && task.getCaseType().equals(Case.DATIVE)){
-            noun = task.getNoun().getPluralDat();
-        } else {
-            noun = task.getNoun().getSingularNom();
-        }
 
         if(task.isPlural() == true){
             isPlural = "(Plural)";

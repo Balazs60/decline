@@ -18,5 +18,27 @@ public class Task {
     private Adjective adjective;
     private boolean isPlural;
 
+    public String getCorrectNounForm() {
+
+        if (this.getCaseType().equals(Case.GENITIVE) && !this.isPlural()) {
+            return this.getNoun().getSingularGen();
+        } else if (this.isPlural() && !this.getCaseType().equals(Case.DATIVE)) {
+            return this.getNoun().getPluralNom();
+        } else if (this.isPlural() && this.getCaseType().equals(Case.DATIVE)) {
+            return this.getNoun().getPluralDat();
+        } else {
+            return this.getNoun().getSingularNom();
+        }
+    }
+
+    public String getFirstCharOfTheArticle() {
+        if (this.getArticle().charAt(0) == 'd') {
+            return "D...";
+        } else if (this.getArticle().charAt(0) == 'e') {
+            return "E...";
+        } else {
+            return "K...";
+        }
+    }
 
 }
