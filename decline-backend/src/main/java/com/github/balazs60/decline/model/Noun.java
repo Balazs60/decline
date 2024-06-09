@@ -22,8 +22,10 @@ public class Noun {
     private Long id;
 
     private String article;
-    private String normalNounForm;
-    private String nounFormWithEEnd;
-    private String nounFormWithNEnd;
-    private String nounFormSEnd;
+    private String singularNom;
+    private String pluralNom;
+    private String pluralDat;
+    private String singularGen;
+
+
 }

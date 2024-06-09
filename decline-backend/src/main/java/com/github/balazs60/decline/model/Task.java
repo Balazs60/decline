@@ -13,10 +13,32 @@ import lombok.Setter;
 public class Task {
 
     private Noun noun;
-    private Article article;
+    private String article;
     private Case caseType;
     private Adjective adjective;
     private boolean isPlural;
 
+    public String getCorrectNounForm() {
+
+        if (this.getCaseType().equals(Case.GENITIVE) && !this.isPlural()) {
+            return this.getNoun().getSingularGen();
+        } else if (this.isPlural() && !this.getCaseType().equals(Case.DATIVE)) {
+            return this.getNoun().getPluralNom();
+        } else if (this.isPlural() && this.getCaseType().equals(Case.DATIVE)) {
+            return this.getNoun().getPluralDat();
+        } else {
+            return this.getNoun().getSingularNom();
+        }
+    }
+
+    public String getFirstCharOfTheArticle() {
+        if (this.getArticle().charAt(0) == 'd') {
+            return "D...";
+        } else if (this.getArticle().charAt(0) == 'e') {
+            return "E...";
+        } else {
+            return "K...";
+        }
+    }
 
 }
