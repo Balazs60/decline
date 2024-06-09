@@ -1,6 +1,7 @@
 package com.github.balazs60.decline.service;
 
 import com.github.balazs60.decline.model.Case;
+import com.github.balazs60.decline.model.articles.Article;
 import com.github.balazs60.decline.model.articles.DefiniteArticle;
 import com.github.balazs60.decline.repositories.DefiniteArticleRepository;
 import com.github.balazs60.decline.repositories.IndefiniteArticleRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ArticleService {
@@ -39,4 +41,26 @@ public class ArticleService {
         }
         return correctArticle;
     }
+
+//    public List<Article> getRandomArticle(){
+//        List<Article> randomArticles = new ArrayList<>();
+//
+//        Random random = new Random();
+//        int randomNumber = random.nextInt(2);
+//
+//        switch (randomNumber) {
+//            case 0:
+//                randomArticles.addAll(definiteArticleRepository.findAll());
+//                break;
+//            case 1:
+//                randomArticles.addAll(indefiniteArticleRepository.findAll());
+//                break;
+//            case 2:
+//            default:
+//                // Do nothing, return an empty list or null
+//                break;
+//        }
+//
+//        return randomArticles;
+//    }
 }
