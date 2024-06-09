@@ -26,4 +26,6 @@ public class Noun {
     private String pluralNom;
     private String pluralDat;
     private String singularGen;
+
+
 }
