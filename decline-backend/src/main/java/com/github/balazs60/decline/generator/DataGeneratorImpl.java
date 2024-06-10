@@ -163,7 +163,7 @@ public class DataGeneratorImpl implements DataGenerator {
         IndefiniteArticle dativeIndefiniteArticle = new IndefiniteArticle();
         dativeIndefiniteArticle.setCaseType(Case.DATIVE);
         dativeIndefiniteArticle.setMasculine("Einem");
-        dativeIndefiniteArticle.setFeminine("Einen");
+        dativeIndefiniteArticle.setFeminine("Einer");
         dativeIndefiniteArticle.setNeutral("Einem");
         dativeIndefiniteArticle.setPlural("Keinen");
 
