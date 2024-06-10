@@ -53,9 +53,6 @@ public class TaskService {
         String isPlural;
         String caseType = task.getCaseType().name();
         String articleByCaseAndGender = articleService.getCorrectDefiniteArticle(task.getArticle(), Case.valueOf(caseType), task.isPlural());
-        char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
-
-        System.out.println("article by case and gender " + articleByCaseAndGender);
 
 
         adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
@@ -66,8 +63,17 @@ public class TaskService {
             isPlural = "(Singular)";
         }
 
-        return firstLetterOfArticle + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType;
-    }
+        if (articleByCaseAndGender != null) {
+            char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
 
+            System.out.println("article by case and gender " + articleByCaseAndGender);
+
+            return firstLetterOfArticle + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType;
+
+        } else {
+            return adjective + " " + noun + "." + " " + isPlural + " " + caseType;
+
+        }
+    }
 
 }

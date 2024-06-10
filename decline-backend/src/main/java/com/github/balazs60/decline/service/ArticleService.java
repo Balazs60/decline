@@ -27,40 +27,47 @@ public class ArticleService {
     }
 
     public String getCorrectDefiniteArticle(String article, Case caseType, boolean nounIsPlural) {
-        List<DefiniteArticle> definiteArticleList = new ArrayList<>();
-        definiteArticleList = getDefiniteArticles();
+        List<Article> randomArticles = new ArrayList<>();
+        randomArticles = getRandomArticles();
 
-        String correctArticle = "";
 
-        for (DefiniteArticle definiteArticle : definiteArticleList) {
-            String actualArticle = definiteArticle.getCorrectArticleByCaseAndGender(article, caseType, nounIsPlural);
+        if(randomArticles.size() > 0) {
 
-            if (actualArticle != null) {
-                correctArticle = actualArticle;
+            String correctArticle = "";
+
+            for (Article randomArticle : randomArticles) {
+                String actualArticle = randomArticle.getCorrectArticleByCaseAndGender(article, caseType, nounIsPlural);
+
+                if (actualArticle != null) {
+                    correctArticle = actualArticle;
+                }
             }
+            return correctArticle;
+        } else {
+
+            return null;
         }
-        return correctArticle;
     }
 
-//    public List<Article> getRandomArticle(){
-//        List<Article> randomArticles = new ArrayList<>();
-//
-//        Random random = new Random();
-//        int randomNumber = random.nextInt(2);
-//
-//        switch (randomNumber) {
-//            case 0:
-//                randomArticles.addAll(definiteArticleRepository.findAll());
-//                break;
-//            case 1:
-//                randomArticles.addAll(indefiniteArticleRepository.findAll());
-//                break;
-//            case 2:
-//            default:
-//                // Do nothing, return an empty list or null
-//                break;
-//        }
-//
-//        return randomArticles;
-//    }
+    public List<Article> getRandomArticles(){
+        List<Article> randomArticles = new ArrayList<>();
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(3);
+
+        switch (randomNumber) {
+            case 0:
+                randomArticles.addAll(definiteArticleRepository.findAll());
+                break;
+            case 1:
+                randomArticles.addAll(indefiniteArticleRepository.findAll());
+                break;
+            case 2:
+            default:
+                // Do nothing, return an empty list or null
+                break;
+        }
+
+        return randomArticles;
+    }
 }
