@@ -5,4 +5,7 @@ public interface DataGenerator {
     public void seedAdjectives();
     public void seedDefiniteArticles();
     public void seedIndefiniteArticles();
+    public void seedStrongAdjectiveDeclensionEndings();
+    public void seedWeakAdjectiveDeclensionEndings();
+    public void seedMixedAdjectiveDeclensionEndings();
 }

@@ -1,6 +1,6 @@
 package com.github.balazs60.decline.service;
 
-import com.github.balazs60.decline.model.Adjective;
+import com.github.balazs60.decline.model.adjective.Adjective;
 import com.github.balazs60.decline.repositories.AdjectiveRepository;
 import org.springframework.stereotype.Service;
 

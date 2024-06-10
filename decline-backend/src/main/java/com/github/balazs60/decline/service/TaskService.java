@@ -1,10 +1,9 @@
 package com.github.balazs60.decline.service;
 
-import com.github.balazs60.decline.model.Adjective;
+import com.github.balazs60.decline.model.adjective.Adjective;
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
-import com.github.balazs60.decline.model.articles.Article;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;

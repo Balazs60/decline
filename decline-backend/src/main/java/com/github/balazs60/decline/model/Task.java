@@ -1,6 +1,6 @@
 package com.github.balazs60.decline.model;
 
-import com.github.balazs60.decline.model.articles.Article;
+import com.github.balazs60.decline.model.adjective.Adjective;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
