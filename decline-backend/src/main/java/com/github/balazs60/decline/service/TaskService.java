@@ -1,5 +1,6 @@
 package com.github.balazs60.decline.service;
 
+import com.github.balazs60.decline.dto.TaskDto;
 import com.github.balazs60.decline.model.adjective.Adjective;
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
@@ -45,7 +46,7 @@ public class TaskService {
         return task;
     }
 
-    public String getTaskInStringFormat() {
+    public TaskDto getTaskInStringFormat() {
         Task task = createTask();
         String adjective;
         String noun = task.getCorrectNounForm();
@@ -53,13 +54,14 @@ public class TaskService {
         String caseType = task.getCaseType().name();
         String articleByCaseAndGender = articleService.getCorrectDefiniteArticle(task.getArticle(), Case.valueOf(caseType), task.isPlural());
         boolean hasTaskArticle;
+        TaskDto taskDto = new TaskDto();
 
-        if(articleByCaseAndGender == null){
+        if (articleByCaseAndGender == null) {
             hasTaskArticle = false;
         } else {
             hasTaskArticle = true;
         }
-        String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType,task.getArticle(),hasTaskArticle,task.isPlural());
+        String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType, task.getArticle(), hasTaskArticle, task.isPlural());
         String inflectedAdjective = task.getAdjective().getNormalAdjectiveForm() + endingOfTheInflectedAdjective;
 
         System.out.println("inflected adjective " + inflectedAdjective);
@@ -76,13 +78,15 @@ public class TaskService {
             char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
 
             System.out.println("article by case and gender " + articleByCaseAndGender);
-
-            return firstLetterOfArticle + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType;
+            taskDto.setTask(firstLetterOfArticle + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         } else {
-            return adjective + " " + noun + "." + " " + isPlural + " " + caseType;
+            taskDto.setTask(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         }
+        taskDto.setInflectedArticle(articleByCaseAndGender);
+        taskDto.setInflectedAdjective(inflectedAdjective);
+        return taskDto;
     }
 
 }
