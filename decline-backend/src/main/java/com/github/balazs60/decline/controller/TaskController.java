@@ -1,5 +1,6 @@
 package com.github.balazs60.decline.controller;
 
+import com.github.balazs60.decline.dto.TaskDto;
 import com.github.balazs60.decline.model.Task;
 import com.github.balazs60.decline.service.TaskService;
 import org.springframework.http.HttpStatus;
@@ -22,11 +23,11 @@ public class TaskController {
     }
 
     @GetMapping("/task")
-    public ResponseEntity<String> getTsk() {
+    public ResponseEntity<TaskDto> getTsk() {
 
         try {
-            String task = taskService.getTaskInStringFormat();
-            return new ResponseEntity<>(task, HttpStatus.OK);
+            TaskDto taskDto = taskService.getTaskInStringFormat();
+            return new ResponseEntity<>(taskDto, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
