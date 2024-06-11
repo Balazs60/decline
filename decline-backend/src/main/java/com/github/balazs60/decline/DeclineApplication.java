@@ -21,6 +21,10 @@ public class DeclineApplication {
 		dataGenerator.seedAdjectives();
 		dataGenerator.seedDefiniteArticles();
 		dataGenerator.seedIndefiniteArticles();
+		dataGenerator.seedStrongAdjectiveDeclensionEndings();
+		dataGenerator.seedWeakAdjectiveDeclensionEndings();
+		dataGenerator.seedMixedAdjectiveDeclensionEndings();
+
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(DeclineApplication.class, args);

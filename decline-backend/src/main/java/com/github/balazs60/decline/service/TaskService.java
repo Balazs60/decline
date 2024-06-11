@@ -1,10 +1,9 @@
 package com.github.balazs60.decline.service;
 
-import com.github.balazs60.decline.model.Adjective;
+import com.github.balazs60.decline.model.adjective.Adjective;
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
-import com.github.balazs60.decline.model.articles.Article;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -53,7 +52,17 @@ public class TaskService {
         String isPlural;
         String caseType = task.getCaseType().name();
         String articleByCaseAndGender = articleService.getCorrectDefiniteArticle(task.getArticle(), Case.valueOf(caseType), task.isPlural());
+        boolean hasTaskArticle;
 
+        if(articleByCaseAndGender == null){
+            hasTaskArticle = false;
+        } else {
+            hasTaskArticle = true;
+        }
+        String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType,task.getArticle(),hasTaskArticle,task.isPlural());
+        String inflectedAdjective = task.getAdjective().getNormalAdjectiveForm() + endingOfTheInflectedAdjective;
+
+        System.out.println("inflected adjective " + inflectedAdjective);
 
         adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
 

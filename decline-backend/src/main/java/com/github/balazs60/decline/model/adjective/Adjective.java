@@ -1,4 +1,4 @@
-package com.github.balazs60.decline.model;
+package com.github.balazs60.decline.model.adjective;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
