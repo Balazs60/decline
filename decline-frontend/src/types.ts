@@ -21,4 +21,6 @@ export interface Task {
     task: String,
     inflectedAdjective: String,
     inflectedArticle: String,
+    articleAnswerOptions: String[],
+    adjectiveAnswerOptions: String[]
 }

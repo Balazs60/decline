@@ -7,6 +7,8 @@ import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -86,7 +88,20 @@ public class TaskService {
         }
         taskDto.setInflectedArticle(articleByCaseAndGender);
         taskDto.setInflectedAdjective(inflectedAdjective);
+        taskDto.setAdjectiveAnswerOptions(getAdjectiveAllForm(task.getAdjective()));
         return taskDto;
     }
 
+    public List<String> getAdjectiveAllForm(Adjective adjective){
+        List<String> adjectiveAllForm = new ArrayList<>();
+
+        adjectiveAllForm.add(adjective.getNormalAdjectiveForm());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithEEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithMEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithNEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithREnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithSEnd());
+
+        return adjectiveAllForm;
+    }
 }
