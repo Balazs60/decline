@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';  // Import FormsModule
 @Component({
   selector: 'app-task',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
@@ -26,19 +26,61 @@ export class TaskComponent {
 
   selectedArticle: string;
   selectedAdjective: string;
+  articleValidationResult: string = '';
+  adjectiveValidationResult: string = '';
+  answersChecked: boolean;
 
   constructor(private taskService: TasksService) {
     this.selectedAdjective = "",
-    this.selectedArticle=""
+      this.selectedArticle = ""
+      this.answersChecked = false;
   }
 
   ngOnInit() {
-    console.log("ngOnInit");
+    this.fetchTask();
+
+  }
+
+  fetchTask(): void {
     this.taskService.getTask('/api/task').subscribe((task: Task) => {
       this.selectedArticle = '';
       this.selectedAdjective = '';
-      console.log(task.task);
+      this.articleValidationResult = '';
+      this.adjectiveValidationResult = '';
+      this.answersChecked = false,
+        console.log(task.task);
       this.task = task
     });
+  }
+
+  checkAnswersChecked(): void {
+    if (this.answersChecked) {
+      this.fetchTask()
+    }
+  }
+
+  checkAnswers(): void {
+    this.answersChecked = true;
+    this.articleValidationResult = this.articleAnswerValidator() ? 'Good' : 'Bad';
+    this.adjectiveValidationResult = this.adjectiveAnswerValidator() ? 'Good' : 'Bad';
+
+  }
+
+  articleAnswerValidator(): boolean {
+
+    if (this.selectedArticle === this.task.inflectedArticle) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  adjectiveAnswerValidator(): boolean {
+
+    if (this.selectedAdjective === this.task.inflectedAdjective) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

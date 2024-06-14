@@ -7,6 +7,8 @@
         <li *ngFor="let articleAnswerOption of task.articleAnswerOptions; let i = index">
             <input type="radio" [id]="'article-' + i" name="article" [(ngModel)]="selectedArticle" [value]="articleAnswerOption">
             <label [for]="'article-' + i">{{articleAnswerOption}}</label>
+            <span *ngIf="selectedArticle === articleAnswerOption"> {{articleValidationResult}}</span>
+            <span *ngIf="articleValidationResult==='Bad' && articleAnswerOption === task.inflectedArticle"> Good</span>
         </li>
     </ul>
     
@@ -15,6 +17,11 @@
         <li *ngFor="let adjectiveAnswerOption of task.adjectiveAnswerOptions; let i = index">
             <input type="radio" [id]="'adjective-' + i" name="adjective" [(ngModel)]="selectedAdjective" [value]="adjectiveAnswerOption">
             <label [for]="'adjective-' + i">{{adjectiveAnswerOption}}</label>
+            <span *ngIf="selectedAdjective === adjectiveAnswerOption"> {{adjectiveValidationResult}}</span>
+            <span *ngIf="adjectiveValidationResult==='Bad' && adjectiveAnswerOption === task.inflectedAdjective"> Good</span>
         </li>
     </ul>
+    <Button (click)="checkAnswers()">Check Answers</Button>
+    <Button (click)="checkAnswersChecked()">Next Task</Button>
+
 </div>
