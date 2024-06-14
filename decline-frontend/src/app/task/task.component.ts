@@ -14,12 +14,21 @@ import { of } from 'rxjs';
 })
 export class TaskComponent {
 
+  task: Task = {
+    task: "",
+    inflectedAdjective: "",
+    inflectedArticle: "",
+    articleAnswerOptions: [],
+    adjectiveAnswerOptions: []
+  }
+
   constructor(private taskService: TasksService) {}
 
   ngOnInit() {
     console.log("ngOnInit");
     this.taskService.getTask('/api/task').subscribe((task: Task) => {
       console.log(task.task);
+      this.task = task
     });
   }
 }

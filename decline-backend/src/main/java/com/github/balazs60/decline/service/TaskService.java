@@ -5,8 +5,12 @@ import com.github.balazs60.decline.model.adjective.Adjective;
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
+import com.github.balazs60.decline.model.articles.Article;
+import com.github.balazs60.decline.model.articles.DefiniteArticle;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -76,9 +80,9 @@ public class TaskService {
 
         if (articleByCaseAndGender != null) {
             char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
-
+            taskDto.setArticleAnswerOptions(getArticleAllForm(firstLetterOfArticle, task.isPlural()));
             System.out.println("article by case and gender " + articleByCaseAndGender);
-            taskDto.setTask(firstLetterOfArticle + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+            taskDto.setTask(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         } else {
             taskDto.setTask(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
@@ -86,7 +90,54 @@ public class TaskService {
         }
         taskDto.setInflectedArticle(articleByCaseAndGender);
         taskDto.setInflectedAdjective(inflectedAdjective);
+        taskDto.setAdjectiveAnswerOptions(getAdjectiveAllForm(task.getAdjective()));
+        System.out.println("articles answer options " + taskDto.getArticleAnswerOptions());
         return taskDto;
     }
 
+    public List<String> getAdjectiveAllForm(Adjective adjective) {
+        List<String> adjectiveAllForm = new ArrayList<>();
+
+        adjectiveAllForm.add(adjective.getNormalAdjectiveForm());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithEEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithMEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithNEnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithREnd());
+        adjectiveAllForm.add(adjective.getAdjectiveFormWithSEnd());
+
+        return adjectiveAllForm;
+    }
+
+    public List<String> getArticleAllForm(char firstCharOfArticle, boolean isPlural) {
+        List<String> articleAnswerOptions = new ArrayList<>();
+
+        System.out.println("isplural " + isPlural);
+        if (firstCharOfArticle == 'D') {
+            for (Article article : articleService.getDefiniteArticles()) {
+                if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+                    articleAnswerOptions.add(article.getFeminine());
+                    articleAnswerOptions.add(article.getNeutral());
+                }
+
+            }
+        } else if (firstCharOfArticle == 'E' || firstCharOfArticle == 'K') {
+            for (Article article : articleService.getInDefiniteArticles()) {
+                if (isPlural) {
+                    boolean alreadyAdded = articleAnswerOptions.stream()
+                            .anyMatch(option -> option.equals(article.getPlural()));
+
+                    if (!alreadyAdded) {
+                        System.out.println("pluuural ");
+                        articleAnswerOptions.add(article.getPlural());
+                    }
+                } else {
+                    if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+                        articleAnswerOptions.add(article.getFeminine());
+                        articleAnswerOptions.add(article.getNeutral());
+                    }
+                }
+            }
+        }
+        return articleAnswerOptions;
+    }
 }

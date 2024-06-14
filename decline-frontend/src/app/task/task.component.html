@@ -1,1 +1,14 @@
-<p>task works!</p>
+<div>
+    <h2>Adjective Declension</h2>
+    <p>{{task.task}}</p>
+    <ul>
+        <li *ngFor="let articleAnswerOption of task.articleAnswerOptions; let i = index">
+            <p>{{articleAnswerOption}}</p>
+        </li>
+    </ul>
+    <ul>
+        <li *ngFor="let adjectiveAnswerOption of task.adjectiveAnswerOptions; let i = index">
+            <p>{{adjectiveAnswerOption}}</p>
+        </li>
+    </ul>
+</div>
