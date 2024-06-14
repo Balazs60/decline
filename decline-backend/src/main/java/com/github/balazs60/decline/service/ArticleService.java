@@ -3,6 +3,7 @@ package com.github.balazs60.decline.service;
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.articles.Article;
 import com.github.balazs60.decline.model.articles.DefiniteArticle;
+import com.github.balazs60.decline.model.articles.IndefiniteArticle;
 import com.github.balazs60.decline.repositories.DefiniteArticleRepository;
 import com.github.balazs60.decline.repositories.IndefiniteArticleRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class ArticleService {
         this.indefiniteArticleRepository = indefiniteArticleRepository;
     }
 
+    public List<IndefiniteArticle> getInDefiniteArticles() {return indefiniteArticleRepository.findAll();}
     public List<DefiniteArticle> getDefiniteArticles() {
         return definiteArticleRepository.findAll();
     }
