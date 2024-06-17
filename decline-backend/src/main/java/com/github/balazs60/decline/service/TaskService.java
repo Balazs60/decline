@@ -111,7 +111,6 @@ public class TaskService {
     public List<String> getArticleAllForm(char firstCharOfArticle, boolean isPlural) {
         List<String> articleAnswerOptions = new ArrayList<>();
 
-        System.out.println("isplural " + isPlural);
         if (firstCharOfArticle == 'D') {
             for (Article article : articleService.getDefiniteArticles()) {
                 if (!article.getCaseType().equals(Case.NOMINATIVE)) {
@@ -127,7 +126,6 @@ public class TaskService {
                             .anyMatch(option -> option.equals(article.getPlural()));
 
                     if (!alreadyAdded) {
-                        System.out.println("pluuural ");
                         articleAnswerOptions.add(article.getPlural());
                     }
                 } else {
