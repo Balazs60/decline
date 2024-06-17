@@ -49,7 +49,7 @@ public class TaskService {
         return task;
     }
 
-    public TaskDto getTaskInStringFormat() {
+    public TaskDto getTask() {
         Task task = createTask();
         String adjective;
         String noun = task.getCorrectNounForm();
