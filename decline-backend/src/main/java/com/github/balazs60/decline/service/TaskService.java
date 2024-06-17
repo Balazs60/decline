@@ -6,7 +6,6 @@ import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
 import com.github.balazs60.decline.model.articles.Article;
-import com.github.balazs60.decline.model.articles.DefiniteArticle;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,11 +65,11 @@ public class TaskService {
             hasTaskArticle = true;
         }
         String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType, task.getArticle(), hasTaskArticle, task.isPlural());
-        String inflectedAdjective = task.getAdjective().getNormalAdjectiveForm() + endingOfTheInflectedAdjective;
+        String inflectedAdjective = task.getAdjective().getNormalForm() + endingOfTheInflectedAdjective;
 
         System.out.println("inflected adjective " + inflectedAdjective);
 
-        adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
+        adjective = task.getAdjective().getNormalForm() + "...";
 
         if (task.isPlural() == true) {
             isPlural = "(Plural)";
@@ -98,12 +97,12 @@ public class TaskService {
     public List<String> getAdjectiveAllForm(Adjective adjective) {
         List<String> adjectiveAllForm = new ArrayList<>();
 
-        adjectiveAllForm.add(adjective.getNormalAdjectiveForm());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithEEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithMEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithNEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithREnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithSEnd());
+        adjectiveAllForm.add(adjective.getNormalForm());
+        adjectiveAllForm.add(adjective.getEForm());
+        adjectiveAllForm.add(adjective.getMForm());
+        adjectiveAllForm.add(adjective.getNForm());
+        adjectiveAllForm.add(adjective.getRForm());
+        adjectiveAllForm.add(adjective.getSForm());
 
         return adjectiveAllForm;
     }

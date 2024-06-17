@@ -87,12 +87,12 @@ public class DataGeneratorImpl implements DataGenerator {
 
             for (List<String> adjective : adjectives) {
                 Adjective newAdjective = new Adjective();
-                newAdjective.setNormalAdjectiveForm(adjective.get(0));
-                newAdjective.setAdjectiveFormWithEEnd(adjective.get(1));
-                newAdjective.setAdjectiveFormWithREnd(adjective.get(2));
-                newAdjective.setAdjectiveFormWithMEnd(adjective.get(3));
-                newAdjective.setAdjectiveFormWithNEnd(adjective.get(4));
-                newAdjective.setAdjectiveFormWithSEnd(adjective.get(5));
+                newAdjective.setNormalForm(adjective.get(0));
+                newAdjective.setEForm(adjective.get(1));
+                newAdjective.setRForm(adjective.get(2));
+                newAdjective.setMForm(adjective.get(3));
+                newAdjective.setNForm(adjective.get(4));
+                newAdjective.setSForm(adjective.get(5));
                 adjectiveList.add(newAdjective);
             }
         } catch (IOException e) {
