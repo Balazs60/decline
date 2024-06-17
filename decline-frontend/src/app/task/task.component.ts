@@ -29,10 +29,12 @@ export class TaskComponent {
   articleValidationResult: string = '';
   adjectiveValidationResult: string = '';
   answersChecked: boolean;
+  nextTaskError: string;
 
   constructor(private taskService: TasksService) {
     this.selectedAdjective = "",
       this.selectedArticle = ""
+      this.nextTaskError = "";
       this.answersChecked = false;
   }
 
@@ -47,6 +49,7 @@ export class TaskComponent {
       this.selectedAdjective = '';
       this.articleValidationResult = '';
       this.adjectiveValidationResult = '';
+      this.nextTaskError = "";
       this.answersChecked = false,
         console.log(task.task);
       this.task = task
@@ -56,6 +59,8 @@ export class TaskComponent {
   checkAnswersChecked(): void {
     if (this.answersChecked) {
       this.fetchTask()
+    } else {
+      this.nextTaskError = "You have to check the answers!"
     }
   }
 
