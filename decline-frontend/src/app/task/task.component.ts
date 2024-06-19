@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';  // Import FormsModule
 export class TaskComponent {
 
   task: Task = {
-    task: "",
+    question: "",
     inflectedAdjective: "",
     inflectedArticle: "",
     articleAnswerOptions: [],
@@ -51,7 +51,7 @@ export class TaskComponent {
       this.adjectiveValidationResult = '';
       this.nextTaskError = "";
       this.answersChecked = false,
-        console.log(task.task);
+        console.log(task.question);
       this.task = task
     });
   }

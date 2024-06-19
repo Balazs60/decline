@@ -32,11 +32,11 @@ public class AdjectiveService {
         this.random = new Random();
     }
 
-    public List<Adjective> getAllAdjective(){
+    public List<Adjective> getAllAdjective() {
         return adjectiveRepository.findAll();
     }
 
-    public Adjective getRandomAdjective(){
+    public Adjective getRandomAdjective() {
         List<Adjective> adjectiveList = getAllAdjective();
 
         int randomIndex = random.nextInt(adjectiveList.size());
@@ -45,30 +45,39 @@ public class AdjectiveService {
     }
 
     public String getCorrectAdjectiveEnding(String caseType,
-                                                                String article,
-                                                                boolean hasTaskArticle,
-                                                                boolean nounIsPlural){
-        List<AdjectiveDeclensionEndings> endings = new ArrayList<>();
+                                            String article,
+                                            boolean hasTaskArticle,
+                                            boolean nounIsPlural) {
+
+        List<AdjectiveDeclensionEndings> endings = getPossibleAdjectiveEndings(article, hasTaskArticle);
         String correctEnding = null;
 
-        if(hasTaskArticle == false){
-          endings.addAll(strongAdjectiveDeclensionEndingsRepository.findAll());
 
-        } else {
-            char articleFirstChar = article.charAt(0);
-            if(articleFirstChar == 'd'){
-                endings.addAll(weakAdjectiveDeclensionEndingsRepository.findAll());
-            } else {
-                endings.addAll(mixedAdjectiveDeclensionEndingsRepository.findAll());
-            }
-        }
-
-        for(AdjectiveDeclensionEndings adjectiveDeclensionEndings : endings){
-            String ending = adjectiveDeclensionEndings.getCorrectEndingOfAdjective(caseType,article,nounIsPlural);
-            if(ending != null){
-               correctEnding = ending;
+        for (AdjectiveDeclensionEndings adjectiveDeclensionEndings : endings) {
+            String ending = adjectiveDeclensionEndings.getCorrectEndingOfAdjective(caseType, article, nounIsPlural);
+            if (ending != null) {
+                correctEnding = ending;
             }
         }
         return correctEnding;
-    };
+    }
+
+    ;
+
+    public List<AdjectiveDeclensionEndings> getPossibleAdjectiveEndings(String article, boolean hasTaskArticle) {
+        List<AdjectiveDeclensionEndings> possibleAdjectiveEndings = new ArrayList<>();
+
+        if (hasTaskArticle == false) {
+            possibleAdjectiveEndings.addAll(strongAdjectiveDeclensionEndingsRepository.findAll());
+
+        } else {
+            char articleFirstChar = article.charAt(0);
+            if (articleFirstChar == 'd') {
+                possibleAdjectiveEndings.addAll(weakAdjectiveDeclensionEndingsRepository.findAll());
+            } else {
+                possibleAdjectiveEndings.addAll(mixedAdjectiveDeclensionEndingsRepository.findAll());
+            }
+        }
+        return possibleAdjectiveEndings;
+    }
 }

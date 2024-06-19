@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskDto {
-    private String task;
+    private String question;
     private String inflectedAdjective;
     private String inflectedArticle;
     private List<String> articleAnswerOptions;

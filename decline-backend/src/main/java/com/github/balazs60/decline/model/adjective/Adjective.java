@@ -21,10 +21,10 @@ public class Adjective {
     @GeneratedValue
     private Long id;
 
-    private String normalAdjectiveForm;
-    private String adjectiveFormWithEEnd;
-    private String adjectiveFormWithREnd;
-    private String adjectiveFormWithMEnd;
-    private String adjectiveFormWithNEnd;
-    private String adjectiveFormWithSEnd;
+    private String normalForm;
+    private String eForm;
+    private String rForm;
+    private String mForm;
+    private String nForm;
+    private String sForm;
 }

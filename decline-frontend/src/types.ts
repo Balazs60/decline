@@ -18,7 +18,7 @@ export interface Options {
 }
 
 export interface Task {
-    task: String,
+    question: String,
     inflectedAdjective: String,
     inflectedArticle: String,
     articleAnswerOptions: String[],

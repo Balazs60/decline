@@ -1,15 +1,22 @@
 package com.github.balazs60.decline.model.articles;
 
 import com.github.balazs60.decline.model.Case;
+import com.github.balazs60.decline.model.strategy.articleFormStrategy.ArticleFormStrategy;
+import com.github.balazs60.decline.model.strategy.articleFormStrategy.FeminineArticleStrategy;
+import com.github.balazs60.decline.model.strategy.articleFormStrategy.MasculineArticleStrategy;
+import com.github.balazs60.decline.model.strategy.articleFormStrategy.NeutralArticleStrategy;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
 public abstract class Article {
@@ -19,32 +26,47 @@ public abstract class Article {
     private String feminine;
     private String neutral;
     private String plural;
+    @Transient
+    private List<ArticleFormStrategy> articleFormStrategies;
 
-    public String getCorrectArticleByCaseAndGender(String nounOriginalArticle, Case caseType, boolean nounIsPlural) {
+    public Article() {
+        this.articleFormStrategies = new ArrayList<>();
+        this.articleFormStrategies.add(new MasculineArticleStrategy());
+        this.articleFormStrategies.add(new FeminineArticleStrategy());
+        this.articleFormStrategies.add(new NeutralArticleStrategy());
+    }
+
+    public String getCorrectArticleByCaseAndGender(String nominativeArticle, Case caseType, boolean nounIsPlural) {
         String correctArticle = null;
         if (this.caseType == caseType) {
             if (nounIsPlural) {
                 return this.plural;
             } else {
-                correctArticle = this.getCorrectArticleByGender(nounOriginalArticle);
+                correctArticle = this.getCorrectArticleByGender(nominativeArticle);
 
             }
         }
         return correctArticle;
     }
 
-    public String getCorrectArticleByGender(String nounOriginalArticle) {
-        System.out.println("article from get correct art...method " + nounOriginalArticle);
-        if (nounOriginalArticle.equals("der")) {
-            System.out.println("this. masculine article " + this.masculine);
-            return this.masculine;
-        } else if (nounOriginalArticle.equals("die")) {
-            System.out.println("this. feminine article " + this.feminine);
-            return this.feminine;
-        } else {
-            System.out.println("this. neutral article " + this.neutral);
-            return this.neutral;
+//    public String getCorrectArticleByGender(String nominativeArticle) {
+//        if (nominativeArticle.equals("der")) {
+//            return this.masculine;
+//        } else if (nominativeArticle.equals("die")) {
+//            return this.feminine;
+//        } else {
+//            return this.neutral;
+//        }
+//    }
+
+    public String getCorrectArticleByGender(String nominativeArticle){
+        for(ArticleFormStrategy articleFormStrategy : articleFormStrategies){
+            String article = articleFormStrategy.getArticle(nominativeArticle,this);
+            if(article != null){
+                return article;
+            }
         }
+        return null;
     }
 
 }

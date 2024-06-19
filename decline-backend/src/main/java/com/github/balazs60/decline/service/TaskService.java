@@ -6,7 +6,6 @@ import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
 import com.github.balazs60.decline.model.articles.Article;
-import com.github.balazs60.decline.model.articles.DefiniteArticle;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,13 +49,13 @@ public class TaskService {
         return task;
     }
 
-    public TaskDto getTaskInStringFormat() {
+    public TaskDto getTask() {
         Task task = createTask();
         String adjective;
         String noun = task.getCorrectNounForm();
         String isPlural;
         String caseType = task.getCaseType().name();
-        String articleByCaseAndGender = articleService.getCorrectDefiniteArticle(task.getArticle(), Case.valueOf(caseType), task.isPlural());
+        String articleByCaseAndGender = articleService.getCorrectArticleForm(task.getArticle(), Case.valueOf(caseType), task.isPlural());
         boolean hasTaskArticle;
         TaskDto taskDto = new TaskDto();
 
@@ -66,11 +65,11 @@ public class TaskService {
             hasTaskArticle = true;
         }
         String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType, task.getArticle(), hasTaskArticle, task.isPlural());
-        String inflectedAdjective = task.getAdjective().getNormalAdjectiveForm() + endingOfTheInflectedAdjective;
+        String inflectedAdjective = task.getAdjective().getNormalForm() + endingOfTheInflectedAdjective;
 
         System.out.println("inflected adjective " + inflectedAdjective);
 
-        adjective = task.getAdjective().getNormalAdjectiveForm() + "...";
+        adjective = task.getAdjective().getNormalForm() + "...";
 
         if (task.isPlural() == true) {
             isPlural = "(Plural)";
@@ -82,10 +81,10 @@ public class TaskService {
             char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
             taskDto.setArticleAnswerOptions(getArticleAllForm(firstLetterOfArticle, task.isPlural()));
             System.out.println("article by case and gender " + articleByCaseAndGender);
-            taskDto.setTask(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+            taskDto.setQuestion(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         } else {
-            taskDto.setTask(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+            taskDto.setQuestion(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         }
         taskDto.setInflectedArticle(articleByCaseAndGender);
@@ -98,12 +97,12 @@ public class TaskService {
     public List<String> getAdjectiveAllForm(Adjective adjective) {
         List<String> adjectiveAllForm = new ArrayList<>();
 
-        adjectiveAllForm.add(adjective.getNormalAdjectiveForm());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithEEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithMEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithNEnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithREnd());
-        adjectiveAllForm.add(adjective.getAdjectiveFormWithSEnd());
+        adjectiveAllForm.add(adjective.getNormalForm());
+        adjectiveAllForm.add(adjective.getEForm());
+        adjectiveAllForm.add(adjective.getMForm());
+        adjectiveAllForm.add(adjective.getNForm());
+        adjectiveAllForm.add(adjective.getRForm());
+        adjectiveAllForm.add(adjective.getSForm());
 
         return adjectiveAllForm;
     }
