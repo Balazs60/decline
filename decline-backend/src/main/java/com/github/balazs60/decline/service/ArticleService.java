@@ -28,7 +28,7 @@ public class ArticleService {
         return definiteArticleRepository.findAll();
     }
 
-    public String getCorrectDefiniteArticle(String nominativeArticle, Case caseType, boolean nounIsPlural) {
+    public String getCorrectArticleForm(String nominativeArticle, Case caseType, boolean nounIsPlural) {
         List<Article> randomArticles = getRandomArticles();
 
         if(randomArticles.size() > 0) {

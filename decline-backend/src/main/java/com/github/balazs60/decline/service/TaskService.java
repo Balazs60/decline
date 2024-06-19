@@ -55,7 +55,7 @@ public class TaskService {
         String noun = task.getCorrectNounForm();
         String isPlural;
         String caseType = task.getCaseType().name();
-        String articleByCaseAndGender = articleService.getCorrectDefiniteArticle(task.getArticle(), Case.valueOf(caseType), task.isPlural());
+        String articleByCaseAndGender = articleService.getCorrectArticleForm(task.getArticle(), Case.valueOf(caseType), task.isPlural());
         boolean hasTaskArticle;
         TaskDto taskDto = new TaskDto();
 
