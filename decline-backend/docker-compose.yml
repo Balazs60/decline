@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+
+  kanban-postgres:
+    image: "postgres:13-alpine"
+
+    ports:
+      - "5000:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - decline-data:/var/lib/postgresql/data
+
+  decline-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: decline-app
+
+    environment:
+      DB_HOST: decline-postgres
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB_NAME}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - decline-postgres
+
+  decline-ui:
+    build:
+      context: ../decline-frontend
+      dockerfile: Dockerfile_Production
+    container_name: decline-ui
+    ports:
+      - "4200:80"
+    depends_on:
+      - decline-app
+
+volumes:
+  decline-data:
