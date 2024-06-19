@@ -1,10 +1,9 @@
 package com.github.balazs60.decline.model;
 
 import com.github.balazs60.decline.model.adjective.Adjective;
-import com.github.balazs60.decline.model.strategy.*;
+import com.github.balazs60.decline.model.strategy.nounFormStrategy.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;

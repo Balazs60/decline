@@ -1,4 +1,4 @@
-package com.github.balazs60.decline.model.strategy;
+package com.github.balazs60.decline.model.strategy.nounFormStrategy;
 
 import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.Noun;

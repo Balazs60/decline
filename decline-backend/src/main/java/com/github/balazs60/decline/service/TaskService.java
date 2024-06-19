@@ -81,10 +81,10 @@ public class TaskService {
             char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
             taskDto.setArticleAnswerOptions(getArticleAllForm(firstLetterOfArticle, task.isPlural()));
             System.out.println("article by case and gender " + articleByCaseAndGender);
-            taskDto.setTask(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+            taskDto.setQuestion(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         } else {
-            taskDto.setTask(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+            taskDto.setQuestion(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
 
         }
         taskDto.setInflectedArticle(articleByCaseAndGender);

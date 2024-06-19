@@ -28,17 +28,15 @@ public class ArticleService {
         return definiteArticleRepository.findAll();
     }
 
-    public String getCorrectDefiniteArticle(String article, Case caseType, boolean nounIsPlural) {
-        List<Article> randomArticles = new ArrayList<>();
-        randomArticles = getRandomArticles();
-
+    public String getCorrectDefiniteArticle(String nominativeArticle, Case caseType, boolean nounIsPlural) {
+        List<Article> randomArticles = getRandomArticles();
 
         if(randomArticles.size() > 0) {
 
             String correctArticle = "";
 
             for (Article randomArticle : randomArticles) {
-                String actualArticle = randomArticle.getCorrectArticleByCaseAndGender(article, caseType, nounIsPlural);
+                String actualArticle = randomArticle.getCorrectArticleByCaseAndGender(nominativeArticle, caseType, nounIsPlural);
 
                 if (actualArticle != null) {
                     correctArticle = actualArticle;
@@ -66,7 +64,6 @@ public class ArticleService {
                 break;
             case 2:
             default:
-                // Do nothing, return an empty list or null
                 break;
         }
 
