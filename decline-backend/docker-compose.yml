@@ -1,9 +1,8 @@
 version: '3.8'
+
 services:
-
-  kanban-postgres:
+  decline-postgres:
     image: "postgres:13-alpine"
-
     ports:
       - "5000:5432"
     environment:
@@ -18,7 +17,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: decline-app
-
     environment:
       DB_HOST: decline-postgres
       DB_USER: ${POSTGRES_USER}
