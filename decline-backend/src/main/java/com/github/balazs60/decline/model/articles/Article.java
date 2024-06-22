@@ -49,15 +49,6 @@ public abstract class Article {
         return correctArticle;
     }
 
-//    public String getCorrectArticleByGender(String nominativeArticle) {
-//        if (nominativeArticle.equals("der")) {
-//            return this.masculine;
-//        } else if (nominativeArticle.equals("die")) {
-//            return this.feminine;
-//        } else {
-//            return this.neutral;
-//        }
-//    }
 
     public String getCorrectArticleByGender(String nominativeArticle){
         for(ArticleFormStrategy articleFormStrategy : articleFormStrategies){

@@ -51,12 +51,12 @@ public class TaskService {
 
     public TaskDto getTask() {
         Task task = createTask();
-        String adjective;
         String noun = task.getCorrectNounForm();
-        String isPlural;
         String caseType = task.getCaseType().name();
         String articleByCaseAndGender = articleService.getCorrectArticleForm(task.getArticle(), Case.valueOf(caseType), task.isPlural());
         boolean hasTaskArticle;
+        String adjective;
+        String pluralOrSignature;
         TaskDto taskDto = new TaskDto();
 
         if (articleByCaseAndGender == null) {
@@ -72,21 +72,13 @@ public class TaskService {
         adjective = task.getAdjective().getNormalForm() + "...";
 
         if (task.isPlural() == true) {
-            isPlural = "(Plural)";
+            pluralOrSignature = "(Plural)";
         } else {
-            isPlural = "(Singular)";
+            pluralOrSignature = "(Singular)";
         }
 
-        if (articleByCaseAndGender != null) {
-            char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
-            taskDto.setArticleAnswerOptions(getArticleAllForm(firstLetterOfArticle, task.isPlural()));
-            System.out.println("article by case and gender " + articleByCaseAndGender);
-            taskDto.setQuestion(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + isPlural + " " + caseType);
+        createQuestion(articleByCaseAndGender, taskDto, task, adjective, noun, pluralOrSignature, caseType);
 
-        } else {
-            taskDto.setQuestion(adjective + " " + noun + "." + " " + isPlural + " " + caseType);
-
-        }
         taskDto.setInflectedArticle(articleByCaseAndGender);
         taskDto.setInflectedAdjective(inflectedAdjective);
         taskDto.setAdjectiveAnswerOptions(getAdjectiveAllForm(task.getAdjective()));
@@ -107,34 +99,66 @@ public class TaskService {
         return adjectiveAllForm;
     }
 
-    public List<String> getArticleAllForm(char firstCharOfArticle, boolean isPlural) {
+    public List<String> getArticleAnswerOptions(char firstCharOfArticle, boolean isPlural) {
         List<String> articleAnswerOptions = new ArrayList<>();
 
         if (firstCharOfArticle == 'D') {
-            for (Article article : articleService.getDefiniteArticles()) {
-                if (!article.getCaseType().equals(Case.NOMINATIVE)) {
-                    articleAnswerOptions.add(article.getFeminine());
-                    articleAnswerOptions.add(article.getNeutral());
-                }
-
-            }
+            articleAnswerOptions = getPossibleFormsOfDefiniteArticles();
         } else if (firstCharOfArticle == 'E' || firstCharOfArticle == 'K') {
-            for (Article article : articleService.getInDefiniteArticles()) {
-                if (isPlural) {
-                    boolean alreadyAdded = articleAnswerOptions.stream()
-                            .anyMatch(option -> option.equals(article.getPlural()));
+            articleAnswerOptions = getPossibleFormsOfIndefiniteArticles(isPlural);
+        }
+        return articleAnswerOptions;
+    }
 
-                    if (!alreadyAdded) {
-                        articleAnswerOptions.add(article.getPlural());
-                    }
-                } else {
-                    if (!article.getCaseType().equals(Case.NOMINATIVE)) {
-                        articleAnswerOptions.add(article.getFeminine());
-                        articleAnswerOptions.add(article.getNeutral());
-                    }
+    public List<String> getPossibleFormsOfDefiniteArticles() {
+        List<String> possibleFormsOfDefiniteArticles = new ArrayList<>();
+        for (Article article : articleService.getDefiniteArticles()) {
+            if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+                possibleFormsOfDefiniteArticles.add(article.getFeminine());
+                possibleFormsOfDefiniteArticles.add(article.getNeutral());
+            }
+
+        }
+        return possibleFormsOfDefiniteArticles;
+    }
+
+    public List<String> getPossibleFormsOfIndefiniteArticles(boolean isPlural) {
+        List<String> possibleFormsOfInDefiniteArticles = new ArrayList<>();
+
+        for (Article article : articleService.getInDefiniteArticles()) {
+            if (isPlural) {
+                boolean alreadyAdded = possibleFormsOfInDefiniteArticles.stream()
+                        .anyMatch(option -> option.equals(article.getPlural()));
+
+                if (!alreadyAdded) {
+                    possibleFormsOfInDefiniteArticles.add(article.getPlural());
+                }
+            } else {
+                if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+                    possibleFormsOfInDefiniteArticles.add(article.getFeminine());
+                    possibleFormsOfInDefiniteArticles.add(article.getNeutral());
                 }
             }
         }
-        return articleAnswerOptions;
+        return possibleFormsOfInDefiniteArticles;
+    }
+
+    public void createQuestion(String articleByCaseAndGender,
+                               TaskDto taskDto,
+                               Task task,
+                               String adjective,
+                               String noun,
+                               String pluralOrSignature,
+                               String caseType) {
+        if (articleByCaseAndGender != null) {
+            char firstLetterOfArticle = articleByCaseAndGender.charAt(0);
+            taskDto.setArticleAnswerOptions(getArticleAnswerOptions(firstLetterOfArticle, task.isPlural()));
+            System.out.println("article by case and gender " + articleByCaseAndGender);
+            taskDto.setQuestion(firstLetterOfArticle + "... " + " " + adjective + " " + noun + "." + " " + pluralOrSignature + " " + caseType);
+
+        } else {
+            taskDto.setQuestion(adjective + " " + noun + "." + " " + pluralOrSignature + " " + caseType);
+
+        }
     }
 }
