@@ -10,6 +10,5 @@ public class GenitiveSingularStrategy implements NounFormStrategy {
             return noun.getSingularGen();
         }
         return null;
-
     }
 }

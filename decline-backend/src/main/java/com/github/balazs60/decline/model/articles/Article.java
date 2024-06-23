@@ -43,7 +43,6 @@ public abstract class Article {
                 return this.plural;
             } else {
                 correctArticle = this.getCorrectArticleByGender(nominativeArticle);
-
             }
         }
         return correctArticle;
