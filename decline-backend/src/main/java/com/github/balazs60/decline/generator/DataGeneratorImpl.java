@@ -136,7 +136,7 @@ public class DataGeneratorImpl implements DataGenerator {
         DefiniteArticle genitiveDefiniteArticles = new DefiniteArticle();
         genitiveDefiniteArticles.setCaseType(Case.GENITIVE);
         genitiveDefiniteArticles.setMasculine("Des");
-        genitiveDefiniteArticles.setFeminine("Den");
+        genitiveDefiniteArticles.setFeminine("Der");
         genitiveDefiniteArticles.setNeutral("Des");
         genitiveDefiniteArticles.setPlural("Der");
 
@@ -178,9 +178,9 @@ public class DataGeneratorImpl implements DataGenerator {
         IndefiniteArticle genitiveIndefiniteArticle = new IndefiniteArticle();
         genitiveIndefiniteArticle.setCaseType(Case.GENITIVE);
         genitiveIndefiniteArticle.setMasculine("Eines");
-        genitiveIndefiniteArticle.setFeminine("Einen");
+        genitiveIndefiniteArticle.setFeminine("Einer");
         genitiveIndefiniteArticle.setNeutral("Eines");
-        genitiveIndefiniteArticle.setPlural("Keinen");
+        genitiveIndefiniteArticle.setPlural("Keiner");
 
         indefiniteArticleList.add(genitiveIndefiniteArticle);
         indefiniteArticleRepository.saveAll(indefiniteArticleList);
