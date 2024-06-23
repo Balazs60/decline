@@ -22,8 +22,7 @@ Tailwind CSS technologies.
 
 ### Prerequisites
 
-Java JDK
-Docker Desktop
+* Docker Desktop, or Docker with Docker Compose.
 
 ### Installation
 
