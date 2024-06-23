@@ -33,9 +33,10 @@ Docker Desktop
     git clone https://github.com/Balazs60/decline
     ```
 
+2.  Navigate to the `decline/decline-backend` directory and create a copy from
+    `env_example` called `.env`.
 
-2.  Find the `env_example` file in the `decline/decline-backend` folder and fill
-    out the properties:
+3.  Fill out the variables in `.env` with values of your choice:
 
     ```
     POSTGRES_USER=
@@ -43,21 +44,13 @@ Docker Desktop
     POSTGRES_DB_NAME=
     ```
 
-3.  Finally, rename the `env_example` file to `.env`.
-
-4.  Navigate to the required directory:
-
-    ```
-    cd decline/decline-backend
-    ```
-
-5.  Run command:
+4.  Build the Docker images, and start the Docker containers:
 
     ```
     docker compose up
     ```
 
-6.  Use the following port:
+5.  Open the following page in a web browser:
 
     <http://localhost:4200/>
 
