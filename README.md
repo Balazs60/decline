@@ -1,69 +1,71 @@
+# Decline
 
-# Decline  
+## About the project
 
-## About The Project    
+Decline is an application intended to practice German adjective declension.
 
-Decline is an application intended to practice German adjective  
-declension. The idea came to me because I couldn't find another  
-application in this topic that works in this way. This project is still in the  
-early stages of development. I am using Java, Spring, PostgreSQL,  
-Typescript, Angular, and Tailwind CSS technologies.  
+The idea came to me because I couldn't find another application in this topic
+that works in this way. This project is still in the early stages of
+development. I am using Java, Spring, PostgreSQL, Typescript, Angular, and
+Tailwind CSS technologies.
 
+## Built with
 
-## Built With  
-Java  
-Spring  
-Postgresql  
-TypeScript  
-Angular    
-Tailwind CSS  
+* Java
+* Spring
+* Postgresql
+* TypeScript
+* Angular
+* Tailwind CSS
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
-Java JDK  
-Docker Desktop  
+Java JDK
+Docker Desktop
 
-### Installation  
+### Installation
 
-#### Clone the repository  
+1.  Clone the repository:
 
-git clone https://github.com/Balazs60/decline  
-
-
-
-#### Find the env_example file in the decline/decline-backend folder and fill out the properties  
-
-POSTGRES_USER=  
-POSTGRES_PASSWORD=  
-POSTGRES_DB_NAME=  
-
-Finally, rename the env_example file to .env  
+    ```
+    git clone https://github.com/Balazs60/decline
+    ```
 
 
-#### Navigate to the required directory:
+2.  Find the `env_example` file in the `decline/decline-backend` folder and fill
+    out the properties:
 
-cd decline/decline-backend
+    ```
+    POSTGRES_USER=
+    POSTGRES_PASSWORD=
+    POSTGRES_DB_NAME=
+    ```
 
+3.  Finally, rename the `env_example` file to `.env`.
 
-#### Run command:  
+4.  Navigate to the required directory:
 
-docker compose up  
+    ```
+    cd decline/decline-backend
+    ```
 
-#### Use the following port:  
+5.  Run command:
 
-http://localhost:4200/  
+    ```
+    docker compose up
+    ```
 
-## Author  
-Balázs Füredi  
+6.  Use the following port:
 
-## Contact  
-LinkedIn: www.linkedin.com/in/balázs60  
-Email: f.balozs60@gmail.com  
+    <http://localhost:4200/>
 
+## Author
 
+Balázs Füredi
 
+## Contact
 
-
-
+LinkedIn: <https://www.linkedin.com/in/balázs60>
+Email: f.balozs60@gmail.com
