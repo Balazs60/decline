@@ -113,11 +113,13 @@ public class TaskService {
     public List<String> getPossibleFormsOfDefiniteArticles() {
         List<String> possibleFormsOfDefiniteArticles = new ArrayList<>();
         for (Article article : articleService.getDefiniteArticles()) {
-            if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+            if (article.getCaseType().equals(Case.NOMINATIVE)){
                 possibleFormsOfDefiniteArticles.add(article.getFeminine());
                 possibleFormsOfDefiniteArticles.add(article.getNeutral());
+                possibleFormsOfDefiniteArticles.add(article.getMasculine());
+            } else {
+                possibleFormsOfDefiniteArticles.add(article.getMasculine());
             }
-
         }
         return possibleFormsOfDefiniteArticles;
     }
@@ -134,9 +136,9 @@ public class TaskService {
                     possibleFormsOfInDefiniteArticles.add(article.getPlural());
                 }
             } else {
-                if (!article.getCaseType().equals(Case.NOMINATIVE)) {
+                possibleFormsOfInDefiniteArticles.add(article.getMasculine());
+                if(article.getCaseType().equals(Case.ACCUSATIVE) || article.getCaseType().equals(Case.GENITIVE)){
                     possibleFormsOfInDefiniteArticles.add(article.getFeminine());
-                    possibleFormsOfInDefiniteArticles.add(article.getNeutral());
                 }
             }
         }
