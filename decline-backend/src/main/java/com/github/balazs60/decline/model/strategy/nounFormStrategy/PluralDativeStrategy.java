@@ -10,5 +10,6 @@ public class PluralDativeStrategy implements NounFormStrategy {
         if (isPlural && caseType.equals(Case.DATIVE)) {
             return noun.getPluralDat();
         }
-        return null;    }
+        return null;
+    }
 }

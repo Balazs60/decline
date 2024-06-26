@@ -9,25 +9,25 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DeclineApplication {
 
-	private DataGenerator dataGenerator;
+    private DataGenerator dataGenerator;
 
-	public DeclineApplication(DataGenerator dataGenerator) {
-		this.dataGenerator = dataGenerator;
-	}
+    public DeclineApplication(DataGenerator dataGenerator) {
+        this.dataGenerator = dataGenerator;
+    }
 
-	@PostConstruct
-	public void seedDatabase() {
-		dataGenerator.seedNouns();
-		dataGenerator.seedAdjectives();
-		dataGenerator.seedDefiniteArticles();
-		dataGenerator.seedIndefiniteArticles();
-		dataGenerator.seedStrongAdjectiveDeclensionEndings();
-		dataGenerator.seedWeakAdjectiveDeclensionEndings();
-		dataGenerator.seedMixedAdjectiveDeclensionEndings();
+    @PostConstruct
+    public void seedDatabase() {
+        dataGenerator.seedNouns();
+        dataGenerator.seedAdjectives();
+        dataGenerator.seedDefiniteArticles();
+        dataGenerator.seedIndefiniteArticles();
+        dataGenerator.seedStrongAdjectiveDeclensionEndings();
+        dataGenerator.seedWeakAdjectiveDeclensionEndings();
+        dataGenerator.seedMixedAdjectiveDeclensionEndings();
 
-	}
-	public static void main(String[] args) {
-		SpringApplication.run(DeclineApplication.class, args);
-	}
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(DeclineApplication.class, args);
+    }
 
 }

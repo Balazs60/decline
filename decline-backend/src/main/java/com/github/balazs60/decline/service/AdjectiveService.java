@@ -52,7 +52,6 @@ public class AdjectiveService {
         List<AdjectiveDeclensionEndings> endings = getPossibleAdjectiveEndings(article, hasTaskArticle);
         String correctEnding = null;
 
-
         for (AdjectiveDeclensionEndings adjectiveDeclensionEndings : endings) {
             String ending = adjectiveDeclensionEndings.getCorrectEndingOfAdjective(caseType, article, nounIsPlural);
             if (ending != null) {
@@ -61,8 +60,6 @@ public class AdjectiveService {
         }
         return correctEnding;
     }
-
-    ;
 
     public List<AdjectiveDeclensionEndings> getPossibleAdjectiveEndings(String article, boolean hasTaskArticle) {
         List<AdjectiveDeclensionEndings> possibleAdjectiveEndings = new ArrayList<>();
