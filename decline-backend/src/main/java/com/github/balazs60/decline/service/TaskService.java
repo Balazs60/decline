@@ -64,7 +64,7 @@ public class TaskService {
         } else {
             hasTaskArticle = true;
         }
-        String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType, task.getArticle(), hasTaskArticle, task.isPlural());
+        String endingOfTheInflectedAdjective = adjectiveService.getCorrectAdjectiveEnding(caseType,articleByCaseAndGender, task.getArticle(), hasTaskArticle, task.isPlural());
         String inflectedAdjective = task.getAdjective().getNormalForm() + endingOfTheInflectedAdjective;
 
         System.out.println("inflected adjective " + inflectedAdjective);
