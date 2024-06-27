@@ -7,10 +7,10 @@ import com.github.balazs60.decline.model.Noun;
 import com.github.balazs60.decline.model.Task;
 import com.github.balazs60.decline.model.articles.Article;
 import org.springframework.stereotype.Service;
+import java.util.Comparator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 @Service
 public class TaskService {
@@ -114,9 +114,9 @@ public class TaskService {
         List<String> possibleFormsOfDefiniteArticles = new ArrayList<>();
         for (Article article : articleService.getDefiniteArticles()) {
             if (article.getCaseType().equals(Case.NOMINATIVE)){
+                possibleFormsOfDefiniteArticles.add(article.getMasculine());
                 possibleFormsOfDefiniteArticles.add(article.getFeminine());
                 possibleFormsOfDefiniteArticles.add(article.getNeutral());
-                possibleFormsOfDefiniteArticles.add(article.getMasculine());
             } else {
                 possibleFormsOfDefiniteArticles.add(article.getMasculine());
             }
@@ -140,9 +140,20 @@ public class TaskService {
                 if(article.getCaseType().equals(Case.ACCUSATIVE) || article.getCaseType().equals(Case.GENITIVE)){
                     possibleFormsOfInDefiniteArticles.add(article.getFeminine());
                 }
+                sortIndefiniteArticles(possibleFormsOfInDefiniteArticles);
             }
         }
         return possibleFormsOfInDefiniteArticles;
+    }
+
+    public void sortIndefiniteArticles(List<String> possibleFormsOfInDefiniteArticles){
+        Collections.sort(possibleFormsOfInDefiniteArticles, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                List<String> order = List.of("Ein", "Eine", "Einen", "Einem", "Einer", "Eines");
+                return Integer.compare(order.indexOf(s1), order.indexOf(s2));
+            }
+        });
     }
 
     public void createQuestion(String articleByCaseAndGender,
