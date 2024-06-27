@@ -9,10 +9,10 @@ import { Options } from '../../types';
 export class ApiService {
 
   constructor(
-    private httpCleint: HttpClient
+    private httpClient: HttpClient
   ) { }
 
   get<T>(url:string):Observable<T>{
-    return this.httpCleint.get<T>(url) as Observable<T>;
+    return this.httpClient.get<T>(url) as Observable<T>;
   }
 }

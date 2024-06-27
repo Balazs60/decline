@@ -34,12 +34,14 @@ public abstract class AdjectiveDeclensionEndings {
     }
 
     public String getCorrectEndingByGender(String article) {
+        String correctEnding = null;
         if (article.equals("der")) {
-            return this.masculineEnding;
+            correctEnding = this.masculineEnding;
         } else if (article.equals("die")) {
-            return this.feminineEnding;
+            correctEnding = this.feminineEnding;
         } else {
-            return this.neutralEnding;
+            correctEnding = this.neutralEnding;
         }
+        return correctEnding;
     }
 }
