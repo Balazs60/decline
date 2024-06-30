@@ -1,9 +1,9 @@
 <div class="flex flex-col items-center min-h-screen p-4">
-    <h2 class="text-2xl font-bold mb-4">{{task.question}}</h2>
-    
+    <div class="flex flex-col items-center w-auto">
+        <h2 class="text-2xl font-bold mb-4 inline-block">{{task.question}}</h2>    
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
         <div>
-            <h3 class="text-xl font-semibold mb-2">Article Options</h3>
+            <!-- <h3 class="text-xl font-semibold mb-2">Article Options</h3> -->
             <ul>
                 <li *ngFor="let articleAnswerOption of task.articleAnswerOptions; let i = index" class="flex items-center mb-2">
                     <input type="radio" [id]="'article-' + i" name="article" [(ngModel)]="selectedArticle" [value]="articleAnswerOption" [disabled]="answersChecked" class="mr-2">
@@ -15,7 +15,7 @@
         </div>
         
         <div>
-            <h3 class="text-xl font-semibold mb-2">Adjective Options</h3>
+            <!-- <h3 class="text-xl font-semibold mb-2">Adjective Options</h3> -->
             <ul>
                 <li *ngFor="let adjectiveAnswerOption of task.adjectiveAnswerOptions; let i = index" class="flex items-center mb-2">
                     <input type="radio" [id]="'adjective-' + i" name="adjective" [(ngModel)]="selectedAdjective" [value]="adjectiveAnswerOption" [disabled]="answersChecked" class="mr-2">
