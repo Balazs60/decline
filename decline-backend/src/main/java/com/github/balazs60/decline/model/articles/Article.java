@@ -50,13 +50,14 @@ public abstract class Article {
 
 
     public String getCorrectArticleByGender(String nominativeArticle){
+        String correctArticle = null;
         for(ArticleFormStrategy articleFormStrategy : articleFormStrategies){
             String article = articleFormStrategy.getArticle(nominativeArticle,this);
             if(article != null){
-                return article;
+                correctArticle = article;
             }
         }
-        return null;
+        return correctArticle;
     }
 
 }

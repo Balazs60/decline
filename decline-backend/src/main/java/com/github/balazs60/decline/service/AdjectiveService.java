@@ -45,15 +45,16 @@ public class AdjectiveService {
     }
 
     public String getCorrectAdjectiveEnding(String caseType,
-                                            String article,
+                                            String inflectedArticle,
+                                            String originalArticle,
                                             boolean hasTaskArticle,
                                             boolean nounIsPlural) {
 
-        List<AdjectiveDeclensionEndings> endings = getPossibleAdjectiveEndings(article, hasTaskArticle);
+        List<AdjectiveDeclensionEndings> endings = getPossibleAdjectiveEndings(inflectedArticle, hasTaskArticle);
         String correctEnding = null;
 
         for (AdjectiveDeclensionEndings adjectiveDeclensionEndings : endings) {
-            String ending = adjectiveDeclensionEndings.getCorrectEndingOfAdjective(caseType, article, nounIsPlural);
+            String ending = adjectiveDeclensionEndings.getCorrectEndingOfAdjective(caseType, originalArticle, nounIsPlural);
             if (ending != null) {
                 correctEnding = ending;
             }
@@ -61,15 +62,15 @@ public class AdjectiveService {
         return correctEnding;
     }
 
-    public List<AdjectiveDeclensionEndings> getPossibleAdjectiveEndings(String article, boolean hasTaskArticle) {
+    public List<AdjectiveDeclensionEndings> getPossibleAdjectiveEndings(String inflectedArticle, boolean hasTaskArticle) {
         List<AdjectiveDeclensionEndings> possibleAdjectiveEndings = new ArrayList<>();
 
         if (hasTaskArticle == false) {
             possibleAdjectiveEndings.addAll(strongAdjectiveDeclensionEndingsRepository.findAll());
 
         } else {
-            char articleFirstChar = article.charAt(0);
-            if (articleFirstChar == 'd') {
+            char articleFirstChar = inflectedArticle.charAt(0);
+            if (articleFirstChar == 'D') {
                 possibleAdjectiveEndings.addAll(weakAdjectiveDeclensionEndingsRepository.findAll());
             } else {
                 possibleAdjectiveEndings.addAll(mixedAdjectiveDeclensionEndingsRepository.findAll());

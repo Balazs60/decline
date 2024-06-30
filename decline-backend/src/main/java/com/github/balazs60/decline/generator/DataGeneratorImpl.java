@@ -52,7 +52,7 @@ public class DataGeneratorImpl implements DataGenerator {
 
     @Override
     public void seedNouns() {
-        List<Noun> nounsList = new ArrayList<>();
+        List<Noun> nounList = new ArrayList<>();
         try {
             InputStream inputStream = new ClassPathResource("nouns.json").getInputStream();
 
@@ -66,13 +66,13 @@ public class DataGeneratorImpl implements DataGenerator {
                 newNoun.setPluralNom(noun.get(2));
                 newNoun.setPluralDat(noun.get(3));
                 newNoun.setSingularGen(noun.get(4));
-                nounsList.add(newNoun);
+                nounList.add(newNoun);
 
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        nounRepository.saveAll(nounsList);
+        nounRepository.saveAll(nounList);
     }
 
 
