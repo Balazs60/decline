@@ -1,36 +1,44 @@
+<!-- task.component.html -->
 <div class="flex flex-col items-center min-h-screen p-4">
     <div class="flex flex-col items-center w-auto">
-        <h2 class="text-2xl font-bold mb-4 inline-block">{{task.question}}</h2>    
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
-        <div>
-            <!-- <h3 class="text-xl font-semibold mb-2">Article Options</h3> -->
-            <ul>
-                <li *ngFor="let articleAnswerOption of task.articleAnswerOptions; let i = index" class="flex items-center mb-2">
-                    <input type="radio" [id]="'article-' + i" name="article" [(ngModel)]="selectedArticle" [value]="articleAnswerOption" [disabled]="answersChecked" class="mr-2">
-                    <label [for]="'article-' + i" class="mr-2">{{articleAnswerOption}}</label>
-                    <span *ngIf="selectedArticle === articleAnswerOption"> {{articleValidationResult}}</span>
-                    <span *ngIf="articleValidationResult==='Bad' && articleAnswerOption === task.inflectedArticle"> Good</span>
-                </li>
-            </ul>
+        <h2 class="text-2xl font-bold mb-4 inline-block">{{ task.question }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
+            <div>
+                <!-- Article Options -->
+                <ul>
+                    <li *ngFor="let articleAnswerOption of task.articleAnswerOptions; let i = index" class="flex items-center mb-2">
+                        <input type="radio" [id]="'article-' + i" name="article" [(ngModel)]="selectedArticle" [value]="articleAnswerOption" [disabled]="answersChecked" class="mr-2">
+                        <label [for]="'article-' + i" class="mr-2">{{ articleAnswerOption }}</label>
+                        <ng-container *ngIf="answersChecked">
+                            <img *ngIf="selectedArticle === articleAnswerOption && articleValidationResult === 'Good'" src="assets/images/good2.png" alt="Correct" class="w-4 h-4">
+                            <img *ngIf="selectedArticle === articleAnswerOption && articleValidationResult === 'Bad'" src="assets/images/bad.png" alt="Incorrect" class="w-4 h-4">
+                            <img *ngIf="articleValidationResult === 'Bad' && articleAnswerOption === task.inflectedArticle" src="assets/images/good2.png" alt="Correct" class="w-4 h-4">
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <!-- Adjective Options -->
+                <ul>
+                    <li *ngFor="let adjectiveAnswerOption of task.adjectiveAnswerOptions; let i = index" class="flex items-center mb-2">
+                        <input type="radio" [id]="'adjective-' + i" name="adjective" [(ngModel)]="selectedAdjective" [value]="adjectiveAnswerOption" [disabled]="answersChecked" class="mr-2">
+                        <label [for]="'adjective-' + i" class="mr-2">{{ adjectiveAnswerOption }}</label>
+                        <ng-container *ngIf="answersChecked">
+                            <img *ngIf="selectedAdjective === adjectiveAnswerOption && adjectiveValidationResult === 'Good'" src="assets/images/good2.png" alt="Correct" class="w-4 h-4">
+                            <img *ngIf="selectedAdjective === adjectiveAnswerOption && adjectiveValidationResult === 'Bad'" src="assets/images/bad.png" alt="Incorrect" class="w-4 h-4">
+                            <img *ngIf="adjectiveValidationResult === 'Bad' && adjectiveAnswerOption === task.inflectedAdjective" src="assets/images/good2.png" alt="Correct" class="w-4 h-4">
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
         </div>
-        
-        <div>
-            <!-- <h3 class="text-xl font-semibold mb-2">Adjective Options</h3> -->
-            <ul>
-                <li *ngFor="let adjectiveAnswerOption of task.adjectiveAnswerOptions; let i = index" class="flex items-center mb-2">
-                    <input type="radio" [id]="'adjective-' + i" name="adjective" [(ngModel)]="selectedAdjective" [value]="adjectiveAnswerOption" [disabled]="answersChecked" class="mr-2">
-                    <label [for]="'adjective-' + i" class="mr-2">{{adjectiveAnswerOption}}</label>
-                    <span *ngIf="selectedAdjective === adjectiveAnswerOption"> {{adjectiveValidationResult}}</span>
-                    <span *ngIf="adjectiveValidationResult==='Bad' && adjectiveAnswerOption === task.inflectedAdjective"> Good</span>
-                </li>
-            </ul>
+
+        <div class="flex space-x-4 mt-6">
+            <button (click)="checkAnswers()" class="bg-blue-500 text-white py-2 px-4 rounded">Check Answers</button>
+            <button (click)="checkAnswersChecked()" class="bg-green-500 text-white py-2 px-4 rounded">Next Task</button>
         </div>
+
+        <div *ngIf="nextTaskError" class="text-red-500 mt-4">{{ nextTaskError }}</div>
     </div>
-    
-    <div class="flex space-x-4 mt-6">
-        <button (click)="checkAnswers()" class="bg-blue-500 text-white py-2 px-4 rounded">Check Answers</button>
-        <button (click)="checkAnswersChecked()" class="bg-green-500 text-white py-2 px-4 rounded">Next Task</button>
-    </div>
-    
-    <div *ngIf="nextTaskError" class="text-red-500 mt-4">{{nextTaskError}}</div>
 </div>
