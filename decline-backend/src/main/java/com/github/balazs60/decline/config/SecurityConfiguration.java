@@ -34,20 +34,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> {
 
-                    req.requestMatchers("/task/**").permitAll();
+                    req.requestMatchers("/api/task/**").permitAll();
                     req.requestMatchers("/api/v1/auth/**").permitAll();
-                    req.requestMatchers("/api/guestcart/guest").permitAll();
-                    req.requestMatchers("/api/category/{category}/subcategories").permitAll();
-                    req.requestMatchers("/api/category/{category}/subcategory/{subCategoryId}/products").permitAll();
-                    req.requestMatchers("/api/cart/**").permitAll();
-                    req.requestMatchers("/api/order/**").permitAll();
-                    req.requestMatchers("/api/products-in-cart").permitAll();
-                    req.requestMatchers("/api/payment/**").permitAll();
-                    req.requestMatchers("/api/chat/**").permitAll();
-                    req.requestMatchers("/api/products/{productId}/productdiscount/{productSale}")
 
-                            .hasRole(Role.ADMIN.name())
-                            .anyRequest().authenticated();
                 })
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, AnonymousAuthenticationFilter.class);

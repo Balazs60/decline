@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { RegistrationData } from '../../types';
 import { Observable } from 'rxjs';
-import { Task } from '../../types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TasksService {
+export class RegistrationService {
 
   constructor(private apiService: ApiService) { }
 
-  getTask = (url: string): Observable<Task> => {
-    return this.apiService.get(url)
-  }
-  
+  register = (url: string, body: RegistrationData): Observable<any> => {
+    return this.apiService.post(url, body);
+  };
 }

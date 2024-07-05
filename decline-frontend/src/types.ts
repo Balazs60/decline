@@ -24,3 +24,14 @@ export interface Task {
     articleAnswerOptions: String[],
     adjectiveAnswerOptions: String[]
 }
+
+export interface LoginData {
+    name: String,
+    password: String,
+}
+
+export interface RegistrationData {
+    name: String,
+    email: String,
+    password: String,
+}
