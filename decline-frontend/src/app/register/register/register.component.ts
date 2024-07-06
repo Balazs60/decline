@@ -21,6 +21,7 @@ export class RegisterComponent {
 
   registrationForm: FormGroup;
   errorMessage: string = '';
+  isLoggedIn$: Observable<boolean>; 
 
   constructor(private fb: FormBuilder,
     private registrationService: RegistrationService,
@@ -34,6 +35,7 @@ export class RegisterComponent {
       passwordConfirm: ['', Validators.required],
 
     });
+    this.isLoggedIn$ = this.loginService.isLoggedIn;
   }
 
 
@@ -73,4 +75,8 @@ export class RegisterComponent {
     }
   }
 
+  handleLogout() {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
+  }
 }

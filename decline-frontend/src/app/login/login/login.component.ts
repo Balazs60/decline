@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LoginService } from '../../services/login.service';
 import { LoginData } from '../../../types';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,14 @@ export class LoginComponent {
   })
 
   errorMessage: string = '';
+  isLoggedIn$: Observable<boolean>; 
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router) {
+    this.isLoggedIn$ = this.loginService.isLoggedIn;
+
+   }
+
+
 
   login() {
     const loginData: LoginData = {
@@ -44,6 +51,11 @@ export class LoginComponent {
           this.errorMessage = 'Authentication failed. Please check your credentials.';
           console.error(error);
         }      })
+  }
+
+  handleLogout() {
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
