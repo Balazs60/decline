@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { Task } from '../../types';
+import { StatisticData, Task } from '../../types';
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +14,7 @@ export class TasksService {
     return this.apiService.get(url)
   }
   
+  updateStatistic = (url: string, body: StatisticData): Observable<any> => {
+    return this.apiService.patch(url, body);
+  };
 }
