@@ -1,6 +1,11 @@
 <div class="flex flex-col sm:flex-row items-center justify-around p-4 bg-gray-800 text-white">
-    <a  routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a  routerLink="/about" routerLinkActive="active">About</a>
-    <a >Login</a>
-    <a >Profile</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <div *ngIf="isLoggedIn; else loggedOut">
+      <a (click)="handleLogout()" class="cursor-pointer">Log Out</a>
+    </div>
+    <ng-template #loggedOut>
+      <a routerLink="/login" routerLinkActive="active" (click)="handleLogin()">Login</a>
+    </ng-template>
+    <a routerLink="/profile" routerLinkActive="active">Profile</a>
   </div>

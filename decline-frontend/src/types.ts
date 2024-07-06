@@ -26,12 +26,12 @@ export interface Task {
 }
 
 export interface LoginData {
-    name: String,
-    password: String,
+    name: string,
+    password: string,
 }
 
 export interface RegistrationData {
-    name: String,
-    email: String,
-    password: String,
+    name: string,
+    email: string,
+    password: string,
 }

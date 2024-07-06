@@ -4,15 +4,16 @@ import { ApiService } from '../../services/api.service';
 import { Observable } from 'rxjs';
 import { RegistrationService } from '../../services/registration.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';  // Import this
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -21,17 +22,19 @@ export class RegisterComponent {
   registrationForm: FormGroup;
   errorMessage: string = '';
 
-  constructor( private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private registrationService: RegistrationService,
-    private router: Router) {
-      this.registrationForm = this.fb.group({
-        username: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required],
-        passwordConfirm: ['', Validators.required],
-       
-      });
-    }
+    private router: Router,
+    private loginService: LoginService) 
+    {
+    this.registrationForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      passwordConfirm: ['', Validators.required],
+
+    });
+  }
 
 
   register() {
@@ -48,25 +51,26 @@ export class RegisterComponent {
         password: formValues.password
       };
 
-    this.registrationService
-      .register(`/api/v1/auth/register`, registrationData)
-      .subscribe({
-        next: (data) => {
-          console.log("data " + data)
-          if (data.token === 'fail') {
-            this.errorMessage = "This username is already in use. Please try another one.";
-          } else {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('username', formValues.username);
-             this.router.navigate(['/']);
+      this.registrationService
+        .register(`/api/v1/auth/register`, registrationData)
+        .subscribe({
+          next: (data) => {
+            console.log("data " + data)
+            if (data.token === 'fail') {
+              this.errorMessage = "This username is already in use. Please try another one.";
+            } else {
+              this.loginService.setLoggedIn(data.token,formValues.userName)
+              // localStorage.setItem('token', data.token);
+              // localStorage.setItem('username', formValues.username);
+              this.router.navigate(['/']);
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            this.errorMessage = 'Registration failed. Please try again later.';
           }
-        },
-        error: (error) => {
-          console.error(error);
-          this.errorMessage = 'Registration failed. Please try again later.';
-        }
-      });
+        });
+    }
   }
-}
 
 }

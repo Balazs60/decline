@@ -3,7 +3,7 @@
     <div class="bg-white p-8 rounded-lg w-full max-w-md">
       <h1 class="text-2xl mb-4 text-center">Registration</h1>
       <p class="mb-6 text-center">
-        Already have an account? <a routerLink="/" class="text-teal-500">Log In</a>
+        Already have an account? <a routerLink="/login" class="text-teal-500">Log In</a>
       </p>
       <form [formGroup]="registrationForm" (ngSubmit)="register()" class="flex flex-col gap-4">
         <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
