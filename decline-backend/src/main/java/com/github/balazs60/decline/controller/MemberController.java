@@ -18,13 +18,12 @@ public class MemberController {
 
     @PatchMapping("/member/statistic")
     public ResponseEntity<Void> UpdateStatistic(@RequestBody AnswerDataDto answerDataDto) {
-        System.out.println("wauwau");
         try {
-            System.out.println("answertype " + answerDataDto.getAnswerType());
-memberService.addAnswerData(answerDataDto);
+            memberService.addAnswerData(answerDataDto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             System.out.println("error");
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

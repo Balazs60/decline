@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { AnswerType, StatisticData, Task } from '../../types';
+import { StatisticData, Task } from '../../types';
 import { CommonModule } from '@angular/common';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -35,7 +35,6 @@ export class TaskComponent {
   isLoggedIn$: Observable<boolean>;
   isAnswerCorrect: boolean;
   statisticData: StatisticData;
-  answerType: AnswerType;
   question: string;
 
   constructor(private taskService: TasksService, private loginService: LoginService) {
@@ -45,9 +44,8 @@ export class TaskComponent {
     this.answersChecked = false;
     this.isLoggedIn$ = loginService.isLoggedIn
     this.isAnswerCorrect = false;
-    this.statisticData = { answerType: AnswerType.WRONG, question: '', memberName: '' };
-    this.answerType = AnswerType.WRONG,
-    this.question = '';
+    this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
+    this.question = this.task.question;
   }
 
 
@@ -91,13 +89,18 @@ export class TaskComponent {
   }
 
   checkAnswerIsCorrect(){
+
     if(this.task.articleAnswerOptions == null){
       if(this.adjectiveAnswerValidator()){
         this.isAnswerCorrect = true
+      } else {
+        this.isAnswerCorrect = false
       }
     } else {
       if(this.articleAnswerValidator() && this.adjectiveAnswerValidator()){
         this.isAnswerCorrect = true
+      } else {
+        this.isAnswerCorrect = false;
       }
     }
   }
@@ -112,7 +115,6 @@ export class TaskComponent {
   }
 
   adjectiveAnswerValidator(): boolean {
-
     if (this.selectedAdjective === this.task.inflectedAdjective) {
       return true;
     } else {
@@ -121,22 +123,12 @@ export class TaskComponent {
   }
 
   sendStatistic() {
-    console.log("this is from send statistic method")
-    if(this.isAnswerCorrect){
-      this.answerType = AnswerType.Good
-      console.log("good")
-    } else {
-      this.answerType = AnswerType.WRONG
-      this.question = this.task.question
-      console.log("wrong")
+    this.checkAnswerIsCorrect()
 
-    }
-
-    console.log("answertype " + this.answerType)
-    this.statisticData.answerType = this.answerType,
-    this.statisticData.question = this.question
+    this.statisticData.isAnswerCorrect = this.isAnswerCorrect
+    this.statisticData.question = this.task.question
     this.statisticData.memberName = localStorage.getItem("username")!
-
+    
     this.taskService
       .updateStatistic(`/api/member/statistic`, this.statisticData)
       .pipe(

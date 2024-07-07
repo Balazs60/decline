@@ -61,7 +61,7 @@ export class RegisterComponent {
             if (data.token === 'fail') {
               this.errorMessage = "This username is already in use. Please try another one.";
             } else {
-              this.loginService.setLoggedIn(data.token,formValues.userName)
+              this.loginService.setLoggedIn(data.token,formValues.username)
               // localStorage.setItem('token', data.token);
               // localStorage.setItem('username', formValues.username);
               this.router.navigate(['/']);

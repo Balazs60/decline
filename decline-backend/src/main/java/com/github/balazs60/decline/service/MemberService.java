@@ -23,7 +23,7 @@ public class MemberService {
 
     public void addAnswerData(AnswerDataDto answerDataDto) {
         Member member = memberRepository.findMemberByName(answerDataDto.getMemberName());
-        if(answerDataDto.getAnswerType().equals("WRONG")){
+        if(!answerDataDto.isAnswerCorrect()){
             int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
             numberOfWrongAnswers++;
             member.setNumberOfWrongAnswers(numberOfWrongAnswers);

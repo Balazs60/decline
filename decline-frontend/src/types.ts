@@ -36,13 +36,10 @@ export interface RegistrationData {
     password: string,
 }
 
-export enum AnswerType {
-    Good,
-    WRONG,
-}
+
 
 export interface StatisticData {
-    answerType: AnswerType,
+    isAnswerCorrect: boolean,
     question: string,
     memberName: string;
 }
