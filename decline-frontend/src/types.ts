@@ -18,7 +18,7 @@ export interface Options {
 }
 
 export interface Task {
-    question: String,
+    question: string,
     inflectedAdjective: String,
     inflectedArticle: String,
     articleAnswerOptions: String[],
@@ -34,4 +34,12 @@ export interface RegistrationData {
     name: string,
     email: string,
     password: string,
+}
+
+
+
+export interface StatisticData {
+    isAnswerCorrect: boolean,
+    question: string,
+    memberName: string;
 }

@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req -> {
 
                     req.requestMatchers("/api/task/**").permitAll();
+                    req.requestMatchers("/api/member/statistic/**").permitAll();
                     req.requestMatchers("/api/v1/auth/**").permitAll();
 
                 })

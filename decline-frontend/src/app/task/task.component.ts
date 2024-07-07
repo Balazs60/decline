@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../services/tasks.service';
-import { Task } from '../../types';
+import { StatisticData, Task } from '../../types';
 import { CommonModule } from '@angular/common';
 import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FormsModule } from '@angular/forms';  // Import FormsModule
+import { LoginService } from '../services/login.service';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';  // Import FormsModule
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
+
 
   task: Task = {
     question: "",
@@ -30,13 +32,23 @@ export class TaskComponent {
   adjectiveValidationResult: string = '';
   answersChecked: boolean;
   nextTaskError: string;
+  isLoggedIn$: Observable<boolean>;
+  isAnswerCorrect: boolean;
+  statisticData: StatisticData;
+  question: string;
 
-  constructor(private taskService: TasksService) {
+  constructor(private taskService: TasksService, private loginService: LoginService) {
     this.selectedAdjective = "",
       this.selectedArticle = ""
-      this.nextTaskError = "";
-      this.answersChecked = false;
+    this.nextTaskError = "";
+    this.answersChecked = false;
+    this.isLoggedIn$ = loginService.isLoggedIn
+    this.isAnswerCorrect = false;
+    this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
+    this.question = this.task.question;
   }
+
+
 
   ngOnInit() {
     this.fetchTask();
@@ -58,7 +70,12 @@ export class TaskComponent {
 
   checkAnswersChecked(): void {
     if (this.answersChecked) {
+      if (this.isLoggedIn$) {
+        console.log("this is from check answer check")
+        this.sendStatistic()
+      }
       this.fetchTask()
+      
     } else {
       this.nextTaskError = "You have to check the answers!"
     }
@@ -71,6 +88,23 @@ export class TaskComponent {
 
   }
 
+  checkAnswerIsCorrect(){
+
+    if(this.task.articleAnswerOptions == null){
+      if(this.adjectiveAnswerValidator()){
+        this.isAnswerCorrect = true
+      } else {
+        this.isAnswerCorrect = false
+      }
+    } else {
+      if(this.articleAnswerValidator() && this.adjectiveAnswerValidator()){
+        this.isAnswerCorrect = true
+      } else {
+        this.isAnswerCorrect = false;
+      }
+    }
+  }
+
   articleAnswerValidator(): boolean {
 
     if (this.selectedArticle === this.task.inflectedArticle) {
@@ -81,11 +115,33 @@ export class TaskComponent {
   }
 
   adjectiveAnswerValidator(): boolean {
-
     if (this.selectedAdjective === this.task.inflectedAdjective) {
       return true;
     } else {
       return false;
     }
   }
+
+  sendStatistic() {
+    this.checkAnswerIsCorrect()
+
+    this.statisticData.isAnswerCorrect = this.isAnswerCorrect
+    this.statisticData.question = this.task.question
+    this.statisticData.memberName = localStorage.getItem("username")!
+    
+    this.taskService
+      .updateStatistic(`/api/member/statistic`, this.statisticData)
+      .pipe(
+        catchError((error) => {
+          console.error('Error sending statistic data', error);
+          return of(null);
+        })
+      )
+      .subscribe((response) => {
+        if (response) {
+          console.log('Statistic data sent successfully', response);
+        } else {
+          console.error('Failed to send statistic data');
+        }
+      });  }
 }

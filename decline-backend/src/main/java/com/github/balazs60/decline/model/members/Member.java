@@ -25,7 +25,7 @@ public class Member {
     private Role role;
     private int numberOfGoodAnswers;
     private int numberOfWrongAnswers;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "unsuccessful_questions", joinColumns = @JoinColumn(name = "member_id"))
     @Column(name = "question")
     private List<String> unsuccessfulQuestions = new ArrayList<>();
