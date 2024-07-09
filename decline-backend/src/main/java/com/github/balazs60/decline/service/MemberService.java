@@ -1,6 +1,7 @@
 package com.github.balazs60.decline.service;
 
 import com.github.balazs60.decline.dto.AnswerDataDto;
+import com.github.balazs60.decline.dto.AnswerStatisticDto;
 import com.github.balazs60.decline.repositories.MemberRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,14 @@ public class MemberService {
             member.setNumberOfGoodAnswers(numberOfGoodAnswers);
         }
         memberRepository.save(member);
+    }
+
+    public AnswerStatisticDto getStatisticByUserName(String userName){
+        AnswerStatisticDto answerStatisticDto = new AnswerStatisticDto();
+        Member member = memberRepository.findMemberByName(userName);
+        answerStatisticDto.setNumberOfWrongAnswers(member.getNumberOfWrongAnswers());
+        answerStatisticDto.setNumberOfGoodAnswers(member.getNumberOfGoodAnswers());
+        answerStatisticDto.setWrongAnsweredQuestions(member.getUnsuccessfulQuestions());
+        return answerStatisticDto;
     }
 }
