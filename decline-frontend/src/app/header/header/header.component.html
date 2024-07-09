@@ -7,5 +7,7 @@
     <ng-template #loggedOut>
       <a routerLink="/login" routerLinkActive="active" (click)="handleLogin()">Login</a>
     </ng-template>
+    <div *ngIf="isLoggedIn">
     <a routerLink="/profile" routerLinkActive="active">Profile</a>
+  </div>
   </div>

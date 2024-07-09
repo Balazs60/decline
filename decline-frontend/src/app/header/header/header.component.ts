@@ -14,6 +14,7 @@ import { LoginService } from '../../services/login.service';
 export class HeaderComponent {
 
    isLoggedIn: boolean = false;
+   
 
    constructor(private router: Router,private loginService: LoginService) {}
 
