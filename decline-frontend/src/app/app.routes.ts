@@ -3,6 +3,7 @@ import { TaskComponent } from './task/task.component';
 import { AboutComponent } from './about/about/about.component';
 import { RegisterComponent } from './register/register/register.component';
 import { LoginComponent } from './login/login/login.component';
+import { ProfileComponent } from './profile/profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,10 @@ export const routes: Routes = [
         {
           path: 'login',
           component: LoginComponent
+        },
+        {
+          path: 'profile',
+          component: ProfileComponent
         }
       
 ];

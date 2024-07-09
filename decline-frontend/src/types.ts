@@ -41,5 +41,11 @@ export interface RegistrationData {
 export interface StatisticData {
     isAnswerCorrect: boolean,
     question: string,
-    memberName: string;
+    memberName: string,
+}
+
+export interface AnswerStatisticData {
+    numberOfWrongAnswers: number,
+    numberOfGoodAnswers: number,
+    wrongAnsweredQuestions: string[],
 }

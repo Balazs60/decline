@@ -1,6 +1,7 @@
 package com.github.balazs60.decline.controller;
 
 import com.github.balazs60.decline.dto.AnswerDataDto;
+import com.github.balazs60.decline.dto.AnswerStatisticDto;
 import com.github.balazs60.decline.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,5 +27,9 @@ public class MemberController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @GetMapping("/member/statistic/{userName}")
+    public AnswerStatisticDto getStatisticByUserName(@PathVariable String userName) {
+        return memberService.getStatisticByUserName(userName);
     }
 }

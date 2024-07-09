@@ -35,7 +35,6 @@ export class TaskComponent {
   isLoggedIn$: Observable<boolean>;
   isAnswerCorrect: boolean;
   statisticData: StatisticData;
-  question: string;
 
   constructor(private taskService: TasksService, private loginService: LoginService) {
     this.selectedAdjective = "",
@@ -45,14 +44,10 @@ export class TaskComponent {
     this.isLoggedIn$ = loginService.isLoggedIn
     this.isAnswerCorrect = false;
     this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
-    this.question = this.task.question;
   }
-
-
 
   ngOnInit() {
     this.fetchTask();
-
   }
 
   fetchTask(): void {
