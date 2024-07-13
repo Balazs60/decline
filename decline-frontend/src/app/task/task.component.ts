@@ -32,7 +32,7 @@ export class TaskComponent {
   adjectiveValidationResult: string = '';
   answersChecked: boolean;
   nextTaskError: string;
-  isLoggedIn$: Observable<boolean>;
+  isLoggedIn: boolean = false;
   isAnswerCorrect: boolean;
   statisticData: StatisticData;
 
@@ -41,13 +41,15 @@ export class TaskComponent {
       this.selectedArticle = ""
     this.nextTaskError = "";
     this.answersChecked = false;
-    this.isLoggedIn$ = loginService.isLoggedIn
     this.isAnswerCorrect = false;
     this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
   }
 
   ngOnInit() {
     this.fetchTask();
+    this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
   fetchTask(): void {
@@ -65,7 +67,9 @@ export class TaskComponent {
 
   checkAnswersChecked(): void {
     if (this.answersChecked) {
-      if (this.isLoggedIn$) {
+      if (this.isLoggedIn) {
+        console.log("isLoggedIn$ " + this.isLoggedIn)
+        console.log("username localstorage " + localStorage.getItem('username'))
         console.log("this is from check answer check")
         this.sendStatistic()
       }
