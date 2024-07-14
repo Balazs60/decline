@@ -9,8 +9,8 @@
     <div class="bg-white shadow-md rounded p-4">
       <h2 class="text-xl font-bold mb-2">Wrong Answered Questions</h2>
       <ul class="list-disc pl-5">
-        <li *ngFor="let question of answerStatisticData.wrongAnsweredQuestions" class="mb-1">
-          {{ question }}
+        <li *ngFor="let unSuccessfulTask of answerStatisticData.unSuccessfulTasks" class="mb-1">
+          {{ unSuccessfulTask.question }}
         </li>
       </ul>
     </div>

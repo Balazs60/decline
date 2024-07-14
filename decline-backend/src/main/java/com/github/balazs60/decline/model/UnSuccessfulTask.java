@@ -1,5 +1,6 @@
 package com.github.balazs60.decline.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.balazs60.decline.model.members.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,11 +28,9 @@ public class UnSuccessfulTask {
     private List<String> articleAnswerOptions = new ArrayList<>();
     @ElementCollection
     private List<String> adjectiveAnswerOptions = new ArrayList<>();
-    @ManyToOne
-    @JoinTable(name = "member_wrong_task",
-            joinColumns = @JoinColumn(name ="member_id"),
-            inverseJoinColumns = @JoinColumn(name = "un_successful_task_id")
-    )
-     private Member member;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Member member;
 
 }

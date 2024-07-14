@@ -127,7 +127,10 @@ export class TaskComponent {
     this.statisticData.isAnswerCorrect = this.isAnswerCorrect
     this.statisticData.unSuccessfulTask = this.task
     this.statisticData.memberName = localStorage.getItem("username")!
-    
+    console.log("unsuccessfultask question " + this.statisticData.unSuccessfulTask.question)
+    console.log("unsuccessfultask inf_adjective " + this.statisticData.unSuccessfulTask.question)
+    console.log("unsuccessfultask inf_artice " + this.statisticData.unSuccessfulTask.question)
+
     this.taskService
       .updateStatistic(`/api/member/statistic`, this.statisticData)
       .pipe(

@@ -29,7 +29,7 @@ public class MemberService {
     public void addAnswerData(AnswerDataDto answerDataDto) {
         Member member = memberRepository.findMemberByName(answerDataDto.getMemberName());
         if(!answerDataDto.isAnswerCorrect()){
-            unSuccessfulTaskService.addUnsuccessfulTask(answerDataDto.getUnSuccessfulTask());
+            unSuccessfulTaskService.addUnsuccessfulTask(answerDataDto,member);
             int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
             numberOfWrongAnswers++;
             member.setNumberOfWrongAnswers(numberOfWrongAnswers);
@@ -49,7 +49,7 @@ public class MemberService {
         Member member = memberRepository.findMemberByName(userName);
         answerStatisticDto.setNumberOfWrongAnswers(member.getNumberOfWrongAnswers());
         answerStatisticDto.setNumberOfGoodAnswers(member.getNumberOfGoodAnswers());
-        answerStatisticDto.setWrongAnsweredQuestions(member.getUnSuccessfulTasks());
+        answerStatisticDto.setUnSuccessfulTasks(member.getUnSuccessfulTasks());
         return answerStatisticDto;
     }
 }

@@ -11,5 +11,5 @@ import java.util.List;
 public class AnswerStatisticDto {
     private int numberOfWrongAnswers;
     private int numberOfGoodAnswers;
-    private List<UnSuccessfulTask> wrongAnsweredQuestions;
+    private List<UnSuccessfulTask> unSuccessfulTasks;
 }

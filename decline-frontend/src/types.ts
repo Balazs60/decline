@@ -47,5 +47,5 @@ export interface StatisticData {
 export interface AnswerStatisticData {
     numberOfWrongAnswers: number,
     numberOfGoodAnswers: number,
-    wrongAnsweredQuestions: string[],
+    unSuccessfulTasks: Task[],
 }
