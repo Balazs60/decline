@@ -46,7 +46,14 @@ export class TaskComponent {
   }
 
   ngOnInit() {
-    this.fetchTask();
+    if(this.taskService.unsuccessfulTask){
+      console.log("yeee")
+      this.task = this.taskService.unsuccessfulTask
+    } else {
+      console.log("nooo")
+      this.fetchTask();
+    }
+
     this.loginService.isLoggedIn.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
