@@ -42,7 +42,7 @@ export class TaskComponent {
     this.nextTaskError = "";
     this.answersChecked = false;
     this.isAnswerCorrect = false;
-    this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
+    this.statisticData = { isAnswerCorrect: false, unSuccessfulTask: null!, memberName: '' };
   }
 
   ngOnInit() {
@@ -125,7 +125,7 @@ export class TaskComponent {
     this.checkAnswerIsCorrect()
 
     this.statisticData.isAnswerCorrect = this.isAnswerCorrect
-    this.statisticData.question = this.task.question
+    this.statisticData.unSuccessfulTask = this.task
     this.statisticData.memberName = localStorage.getItem("username")!
     
     this.taskService

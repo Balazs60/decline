@@ -40,7 +40,7 @@ export interface RegistrationData {
 
 export interface StatisticData {
     isAnswerCorrect: boolean,
-    question: string,
+    unSuccessfulTask: Task,
     memberName: string,
 }
 

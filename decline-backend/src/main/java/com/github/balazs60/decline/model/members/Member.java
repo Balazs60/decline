@@ -1,6 +1,7 @@
 package com.github.balazs60.decline.model.members;
 
 import com.github.balazs60.decline.model.Task;
+import com.github.balazs60.decline.model.UnSuccessfulTask;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,10 +26,12 @@ public class Member {
     private Role role;
     private int numberOfGoodAnswers;
     private int numberOfWrongAnswers;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "unsuccessful_questions", joinColumns = @JoinColumn(name = "member_id"))
-    @Column(name = "question")
-    private List<String> unsuccessfulQuestions = new ArrayList<>();
+    @OneToMany
+    @JoinTable(name = "member_wrong_task",
+            joinColumns = @JoinColumn(name ="un_successful_task_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id")
+    )
+    private List<UnSuccessfulTask> unSuccessfulTasks = new ArrayList<>();
 
     public Role getRole() {
         return role;
