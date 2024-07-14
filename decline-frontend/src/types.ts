@@ -40,12 +40,12 @@ export interface RegistrationData {
 
 export interface StatisticData {
     isAnswerCorrect: boolean,
-    question: string,
+    unSuccessfulTask: Task,
     memberName: string,
 }
 
 export interface AnswerStatisticData {
     numberOfWrongAnswers: number,
     numberOfGoodAnswers: number,
-    wrongAnsweredQuestions: string[],
+    unSuccessfulTasks: Task[],
 }

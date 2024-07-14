@@ -32,7 +32,7 @@ export class TaskComponent {
   adjectiveValidationResult: string = '';
   answersChecked: boolean;
   nextTaskError: string;
-  isLoggedIn$: Observable<boolean>;
+  isLoggedIn: boolean = false;
   isAnswerCorrect: boolean;
   statisticData: StatisticData;
 
@@ -41,13 +41,15 @@ export class TaskComponent {
       this.selectedArticle = ""
     this.nextTaskError = "";
     this.answersChecked = false;
-    this.isLoggedIn$ = loginService.isLoggedIn
     this.isAnswerCorrect = false;
-    this.statisticData = { isAnswerCorrect: false, question: '', memberName: '' };
+    this.statisticData = { isAnswerCorrect: false, unSuccessfulTask: null!, memberName: '' };
   }
 
   ngOnInit() {
     this.fetchTask();
+    this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
   }
 
   fetchTask(): void {
@@ -65,7 +67,9 @@ export class TaskComponent {
 
   checkAnswersChecked(): void {
     if (this.answersChecked) {
-      if (this.isLoggedIn$) {
+      if (this.isLoggedIn) {
+        console.log("isLoggedIn$ " + this.isLoggedIn)
+        console.log("username localstorage " + localStorage.getItem('username'))
         console.log("this is from check answer check")
         this.sendStatistic()
       }
@@ -121,9 +125,12 @@ export class TaskComponent {
     this.checkAnswerIsCorrect()
 
     this.statisticData.isAnswerCorrect = this.isAnswerCorrect
-    this.statisticData.question = this.task.question
+    this.statisticData.unSuccessfulTask = this.task
     this.statisticData.memberName = localStorage.getItem("username")!
-    
+    console.log("unsuccessfultask question " + this.statisticData.unSuccessfulTask.question)
+    console.log("unsuccessfultask inf_adjective " + this.statisticData.unSuccessfulTask.question)
+    console.log("unsuccessfultask inf_artice " + this.statisticData.unSuccessfulTask.question)
+
     this.taskService
       .updateStatistic(`/api/member/statistic`, this.statisticData)
       .pipe(

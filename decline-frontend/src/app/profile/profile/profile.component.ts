@@ -15,7 +15,7 @@ export class ProfileComponent {
   answerStatisticData: AnswerStatisticData = {
     numberOfWrongAnswers: 0,
     numberOfGoodAnswers :0,
-    wrongAnsweredQuestions: []
+    unSuccessfulTasks: []
   }
   userName: string = "";
 
