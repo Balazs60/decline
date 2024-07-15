@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { AnswerStatisticData } from '../../../types';
 import { CommonModule } from '@angular/common';
+import { TasksService } from '../../services/tasks.service';
+import { Task } from '../../../types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +23,7 @@ export class ProfileComponent {
   userName: string = "";
 
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private taskService: TasksService, private router: Router) {
     this.userName = localStorage.getItem('username')!
   }
 
@@ -36,5 +39,10 @@ export class ProfileComponent {
       console.log("answStatData " + answerStatisticData)
      this.answerStatisticData = answerStatisticData;
     });
+  }
+  
+  tryAgainTask(unSuccessfulTask: Task){
+    this.taskService.unsuccessfulTask = unSuccessfulTask
+    this.router.navigate(['/'])
   }
 }

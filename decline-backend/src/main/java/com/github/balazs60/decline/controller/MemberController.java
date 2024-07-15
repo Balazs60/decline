@@ -21,7 +21,6 @@ public class MemberController {
 
     @PatchMapping("/member/statistic")
     public ResponseEntity<Void> UpdateStatistic(@RequestBody AnswerDataDto answerDataDto) {
-        System.out.println("controller unstask question " + answerDataDto.getUnSuccessfulTask().getQuestion());
         try {
             memberService.addAnswerData(answerDataDto);
             return ResponseEntity.ok().build();
@@ -34,9 +33,6 @@ public class MemberController {
     @GetMapping("/member/statistic/{userName}")
     public AnswerStatisticDto getStatisticByUserName(@PathVariable String userName) {
         AnswerStatisticDto answerStatisticDto = memberService.getStatisticByUserName(userName);
-        System.out.println("answer statistic dto " + answerStatisticDto);
-        System.out.println("answer statistic dto unsuccesful task list length: " + answerStatisticDto.getUnSuccessfulTasks().size());
-
         // Add this line to log the JSON response
         try {
             String jsonResponse = new ObjectMapper().writeValueAsString(answerStatisticDto);

@@ -25,4 +25,9 @@ public class UnSuccessfulTaskService {
         unSuccessfulTask.setMember(member);
         unSuccessfulTaskRepository.save(unSuccessfulTask);
     }
+
+    public void removeUnsuccessfulTask(UnSuccessfulTask unSuccessfulTask){
+        unSuccessfulTaskRepository.delete(unSuccessfulTask);
+    }
+
 }

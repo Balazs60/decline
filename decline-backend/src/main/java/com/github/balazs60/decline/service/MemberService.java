@@ -22,34 +22,71 @@ public class MemberService {
         this.unSuccessfulTaskService = unSuccessfulTaskService;
     }
 
-    public Member getMemberByName(String memberName){
+    public Member getMemberByName(String memberName) {
         return memberRepository.findMemberByName(memberName);
     }
 
     public void addAnswerData(AnswerDataDto answerDataDto) {
         Member member = memberRepository.findMemberByName(answerDataDto.getMemberName());
-        if(!answerDataDto.isAnswerCorrect()){
-            unSuccessfulTaskService.addUnsuccessfulTask(answerDataDto,member);
-            int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
-            numberOfWrongAnswers++;
-            member.setNumberOfWrongAnswers(numberOfWrongAnswers);
-            List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
-            unSuccessfulTasks.add(answerDataDto.getUnSuccessfulTask());
-            member.setUnSuccessfulTasks(unSuccessfulTasks);
+        if (!answerDataDto.isAnswerCorrect()) {
+            handleAnswerNotCorrect(answerDataDto, member);
         } else {
-            int numberOfGoodAnswers = member.getNumberOfGoodAnswers();
-            numberOfGoodAnswers++;
-            member.setNumberOfGoodAnswers(numberOfGoodAnswers);
+            handleAnswerIsCorrect(member, answerDataDto.getUnSuccessfulTask());
         }
         memberRepository.save(member);
     }
 
-    public AnswerStatisticDto getStatisticByUserName(String userName){
+    public AnswerStatisticDto getStatisticByUserName(String userName) {
         AnswerStatisticDto answerStatisticDto = new AnswerStatisticDto();
         Member member = memberRepository.findMemberByName(userName);
         answerStatisticDto.setNumberOfWrongAnswers(member.getNumberOfWrongAnswers());
         answerStatisticDto.setNumberOfGoodAnswers(member.getNumberOfGoodAnswers());
         answerStatisticDto.setUnSuccessfulTasks(member.getUnSuccessfulTasks());
         return answerStatisticDto;
+    }
+
+    public UnSuccessfulTask checkMemberAlreadyTriedGivenTask(Member member, UnSuccessfulTask unSuccessfulTask) {
+        List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
+        for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
+            if (unSuccessfulTask1.getId() == unSuccessfulTask.getId()) {
+                return unSuccessfulTask1;
+            }
+        }
+        return null;
+    }
+
+    public void handleAnswerIsCorrect(Member member, UnSuccessfulTask unSuccessfulTask) {
+        UnSuccessfulTask isTaskAlreadyTried = checkMemberAlreadyTriedGivenTask(member, unSuccessfulTask);
+        if ( isTaskAlreadyTried != null) {
+            UnSuccessfulTask taskForRemove = new UnSuccessfulTask();
+            List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
+            for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
+                if (unSuccessfulTask1.getId() == unSuccessfulTask.getId()) {
+                    taskForRemove = unSuccessfulTask1;
+                }
+            }
+            unSuccessfulTasks.remove(taskForRemove);
+            member.setUnSuccessfulTasks(unSuccessfulTasks);
+            unSuccessfulTaskService.removeUnsuccessfulTask(taskForRemove);
+            int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
+            numberOfWrongAnswers-=1;
+            member.setNumberOfWrongAnswers(numberOfWrongAnswers);
+        }
+        int numberOfGoodAnswers = member.getNumberOfGoodAnswers();
+        numberOfGoodAnswers++;
+        member.setNumberOfGoodAnswers(numberOfGoodAnswers);
+    }
+
+    public void handleAnswerNotCorrect(AnswerDataDto answerDataDto, Member member) {
+        if (checkMemberAlreadyTriedGivenTask(member, answerDataDto.getUnSuccessfulTask()) == null) {
+            unSuccessfulTaskService.addUnsuccessfulTask(answerDataDto, member);
+            int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
+            numberOfWrongAnswers++;
+            member.setNumberOfWrongAnswers(numberOfWrongAnswers);
+            List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
+            unSuccessfulTasks.add(answerDataDto.getUnSuccessfulTask());
+            member.setUnSuccessfulTasks(unSuccessfulTasks);
+        }
+
     }
 }
