@@ -18,6 +18,7 @@ export interface Options {
 }
 
 export interface Task {
+    id: number,
     question: string,
     inflectedAdjective: String,
     inflectedArticle: String,

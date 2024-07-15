@@ -19,6 +19,7 @@ export class TaskComponent {
 
 
   task: Task = {
+    id: null!,
     question: "",
     inflectedAdjective: "",
     inflectedArticle: "",
@@ -94,19 +95,28 @@ export class TaskComponent {
 
   }
 
-  checkAnswerIsCorrect(){
-
-    if(this.task.articleAnswerOptions == null){
-      if(this.adjectiveAnswerValidator()){
-        this.isAnswerCorrect = true
-      } else {
-        this.isAnswerCorrect = false
-      }
-    } else {
-      if(this.articleAnswerValidator() && this.adjectiveAnswerValidator()){
-        this.isAnswerCorrect = true
+  checkAnswerIsCorrect() {
+    console.log("articleAnswerOptions " + this.task.articleAnswerOptions);
+    console.log("adjectiveAnswerOptions " + this.task.adjectiveAnswerOptions);
+    console.log("question " + this.task.question);
+  
+    if (!this.task.articleAnswerOptions || this.task.articleAnswerOptions.length === 0) {
+      // If there are no article answer options, only check the adjective
+      if (this.adjectiveAnswerValidator()) {
+        this.isAnswerCorrect = true;
+        console.log("1");
       } else {
         this.isAnswerCorrect = false;
+        console.log("2");
+      }
+    } else {
+      // If there are article answer options, check both article and adjective
+      if (this.articleAnswerValidator() && this.adjectiveAnswerValidator()) {
+        this.isAnswerCorrect = true;
+        console.log("3");
+      } else {
+        this.isAnswerCorrect = false;
+        console.log("4");
       }
     }
   }
@@ -134,9 +144,11 @@ export class TaskComponent {
     this.statisticData.isAnswerCorrect = this.isAnswerCorrect
     this.statisticData.unSuccessfulTask = this.task
     this.statisticData.memberName = localStorage.getItem("username")!
+    console.log("isAnswerCorrect " + this.statisticData.isAnswerCorrect)
     console.log("unsuccessfultask question " + this.statisticData.unSuccessfulTask.question)
     console.log("unsuccessfultask inf_adjective " + this.statisticData.unSuccessfulTask.question)
     console.log("unsuccessfultask inf_artice " + this.statisticData.unSuccessfulTask.question)
+
 
     this.taskService
       .updateStatistic(`/api/member/statistic`, this.statisticData)
