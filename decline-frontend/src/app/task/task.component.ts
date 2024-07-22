@@ -48,10 +48,8 @@ export class TaskComponent {
 
   ngOnInit() {
     if(this.taskService.unsuccessfulTask){
-      console.log("yeee")
       this.task = this.taskService.unsuccessfulTask
     } else {
-      console.log("nooo")
       this.fetchTask();
     }
 
@@ -68,7 +66,6 @@ export class TaskComponent {
       this.adjectiveValidationResult = '';
       this.nextTaskError = "";
       this.answersChecked = false,
-        console.log(task.question);
       this.task = task
     });
   }
@@ -76,9 +73,6 @@ export class TaskComponent {
   checkAnswersChecked(): void {
     if (this.answersChecked) {
       if (this.isLoggedIn) {
-        console.log("isLoggedIn$ " + this.isLoggedIn)
-        console.log("username localstorage " + localStorage.getItem('username'))
-        console.log("this is from check answer check")
         this.sendStatistic()
       }
       this.fetchTask()
@@ -96,27 +90,17 @@ export class TaskComponent {
   }
 
   checkAnswerIsCorrect() {
-    console.log("articleAnswerOptions " + this.task.articleAnswerOptions);
-    console.log("adjectiveAnswerOptions " + this.task.adjectiveAnswerOptions);
-    console.log("question " + this.task.question);
-  
     if (!this.task.articleAnswerOptions || this.task.articleAnswerOptions.length === 0) {
-      // If there are no article answer options, only check the adjective
       if (this.adjectiveAnswerValidator()) {
         this.isAnswerCorrect = true;
-        console.log("1");
       } else {
         this.isAnswerCorrect = false;
-        console.log("2");
       }
     } else {
-      // If there are article answer options, check both article and adjective
       if (this.articleAnswerValidator() && this.adjectiveAnswerValidator()) {
         this.isAnswerCorrect = true;
-        console.log("3");
       } else {
         this.isAnswerCorrect = false;
-        console.log("4");
       }
     }
   }
@@ -144,12 +128,7 @@ export class TaskComponent {
     this.statisticData.isAnswerCorrect = this.isAnswerCorrect
     this.statisticData.unSuccessfulTask = this.task
     this.statisticData.memberName = localStorage.getItem("username")!
-    console.log("isAnswerCorrect " + this.statisticData.isAnswerCorrect)
-    console.log("unsuccessfultask question " + this.statisticData.unSuccessfulTask.question)
-    console.log("unsuccessfultask inf_adjective " + this.statisticData.unSuccessfulTask.question)
-    console.log("unsuccessfultask inf_artice " + this.statisticData.unSuccessfulTask.question)
-
-
+   
     this.taskService
       .updateStatistic(`/api/member/statistic`, this.statisticData)
       .pipe(
@@ -159,7 +138,7 @@ export class TaskComponent {
         })
       )
       .subscribe((response) => {
-        if (response) {
+        if (response !== null) {
           console.log('Statistic data sent successfully', response);
         } else {
           console.error('Failed to send statistic data');
