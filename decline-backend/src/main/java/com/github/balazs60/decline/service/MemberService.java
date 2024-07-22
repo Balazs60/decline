@@ -31,7 +31,7 @@ public class MemberService {
         if (!answerDataDto.isAnswerCorrect()) {
             handleAnswerNotCorrect(answerDataDto, member);
         } else {
-            handleAnswerIsCorrect(member, answerDataDto.getUnSuccessfulTask());
+            handleAnswerIsCorrect(member, answerDataDto);
         }
         memberRepository.save(member);
     }
@@ -45,26 +45,11 @@ public class MemberService {
         return answerStatisticDto;
     }
 
-    public UnSuccessfulTask checkMemberAlreadyTriedGivenTask(Member member, UnSuccessfulTask unSuccessfulTask) {
-        List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
-        for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
-            if (unSuccessfulTask1.getId() == unSuccessfulTask.getId()) {
-                return unSuccessfulTask1;
-            }
-        }
-        return null;
-    }
-
-    public void handleAnswerIsCorrect(Member member, UnSuccessfulTask unSuccessfulTask) {
-        if (checkMemberAlreadyTriedGivenTask(member, unSuccessfulTask) != null) {
-            UnSuccessfulTask taskForRemove = new UnSuccessfulTask();
+    public void handleAnswerIsCorrect(Member member, AnswerDataDto answerDataDto) {
+        UnSuccessfulTask givenTaskWhatMemberAlreadyTried = member.checkMemberAlreadyTriedGivenTask(answerDataDto.getUnSuccessfulTask());
+        if ( givenTaskWhatMemberAlreadyTried!= null) {
             List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
-            for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
-                if (unSuccessfulTask1.getId() == unSuccessfulTask.getId()) {
-                    taskForRemove = unSuccessfulTask1;
-                }
-            }
-            removeUnsuccessfulTask(unSuccessfulTasks,taskForRemove,member);
+            removeUnsuccessfulTask(unSuccessfulTasks,givenTaskWhatMemberAlreadyTried,member);
         }
         int numberOfGoodAnswers = member.getNumberOfGoodAnswers();
         numberOfGoodAnswers++;
@@ -72,7 +57,7 @@ public class MemberService {
     }
 
     public void handleAnswerNotCorrect(AnswerDataDto answerDataDto, Member member) {
-        if (checkMemberAlreadyTriedGivenTask(member, answerDataDto.getUnSuccessfulTask()) == null) {
+        if (member.checkMemberAlreadyTriedGivenTask(answerDataDto.getUnSuccessfulTask()) == null) {
             unSuccessfulTaskService.addUnsuccessfulTask(answerDataDto, member);
             int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
             numberOfWrongAnswers++;

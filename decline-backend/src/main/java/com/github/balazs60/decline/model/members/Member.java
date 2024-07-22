@@ -34,4 +34,14 @@ public class Member {
     public Role getRole() {
         return role;
     }
+
+    public UnSuccessfulTask checkMemberAlreadyTriedGivenTask(UnSuccessfulTask newUnSuccessfulTask) {
+        List<UnSuccessfulTask> unSuccessfulTasks = this.getUnSuccessfulTasks();
+        for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
+            if (unSuccessfulTask1.getId() == newUnSuccessfulTask.getId()) {
+                return unSuccessfulTask1;
+            }
+        }
+        return null;
+    }
 }
