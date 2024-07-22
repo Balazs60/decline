@@ -56,8 +56,7 @@ public class MemberService {
     }
 
     public void handleAnswerIsCorrect(Member member, UnSuccessfulTask unSuccessfulTask) {
-        UnSuccessfulTask isTaskAlreadyTried = checkMemberAlreadyTriedGivenTask(member, unSuccessfulTask);
-        if ( isTaskAlreadyTried != null) {
+        if (checkMemberAlreadyTriedGivenTask(member, unSuccessfulTask) != null) {
             UnSuccessfulTask taskForRemove = new UnSuccessfulTask();
             List<UnSuccessfulTask> unSuccessfulTasks = member.getUnSuccessfulTasks();
             for (UnSuccessfulTask unSuccessfulTask1 : unSuccessfulTasks) {
@@ -65,12 +64,7 @@ public class MemberService {
                     taskForRemove = unSuccessfulTask1;
                 }
             }
-            unSuccessfulTasks.remove(taskForRemove);
-            member.setUnSuccessfulTasks(unSuccessfulTasks);
-            unSuccessfulTaskService.removeUnsuccessfulTask(taskForRemove);
-            int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
-            numberOfWrongAnswers-=1;
-            member.setNumberOfWrongAnswers(numberOfWrongAnswers);
+            removeUnsuccessfulTask(unSuccessfulTasks,taskForRemove,member);
         }
         int numberOfGoodAnswers = member.getNumberOfGoodAnswers();
         numberOfGoodAnswers++;
@@ -87,6 +81,16 @@ public class MemberService {
             unSuccessfulTasks.add(answerDataDto.getUnSuccessfulTask());
             member.setUnSuccessfulTasks(unSuccessfulTasks);
         }
+    }
 
+    public void removeUnsuccessfulTask(List<UnSuccessfulTask> unSuccessfulTasks,
+                                       UnSuccessfulTask taskForRemove,
+                                       Member member) {
+        unSuccessfulTasks.remove(taskForRemove);
+        member.setUnSuccessfulTasks(unSuccessfulTasks);
+        unSuccessfulTaskService.removeUnsuccessfulTask(taskForRemove);
+        int numberOfWrongAnswers = member.getNumberOfWrongAnswers();
+        numberOfWrongAnswers -= 1;
+        member.setNumberOfWrongAnswers(numberOfWrongAnswers);
     }
 }

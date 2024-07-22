@@ -11,7 +11,6 @@ export class ProfileService {
   constructor(private apiService: ApiService) { }
 
   getAnswerStatistic = (url: string): Observable<AnswerStatisticData> => {
-    console.log("kutya")
     return this.apiService.get(url)
   }
 }
