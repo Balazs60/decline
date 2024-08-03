@@ -24,12 +24,13 @@ public class AdjectiveService {
     public AdjectiveService(AdjectiveRepository adjectiveRepository,
                             StrongAdjectiveDeclensionEndingsRepository strongAdjectiveDeclensionEndingsRepository,
                             WeakAdjectiveDeclensionEndingsRepository weakAdjectiveDeclensionEndingsRepository,
-                            MixedAdjectiveDeclensionEndingsRepository mixedAdjectiveDeclensionEndingsRepository) {
+                            MixedAdjectiveDeclensionEndingsRepository mixedAdjectiveDeclensionEndingsRepository,
+                            Random random) {
         this.adjectiveRepository = adjectiveRepository;
         this.strongAdjectiveDeclensionEndingsRepository = strongAdjectiveDeclensionEndingsRepository;
         this.weakAdjectiveDeclensionEndingsRepository = weakAdjectiveDeclensionEndingsRepository;
         this.mixedAdjectiveDeclensionEndingsRepository = mixedAdjectiveDeclensionEndingsRepository;
-        this.random = new Random();
+        this.random = random;
     }
 
     public List<Adjective> getAllAdjective() {

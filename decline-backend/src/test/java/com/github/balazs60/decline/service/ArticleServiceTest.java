@@ -31,10 +31,9 @@ class ArticleServiceTest {
 
     @BeforeEach
     public void setUp(){
-        autoCloseable = MockitoAnnotations.openMocks(this);
-        articleService = new ArticleService(definiteArticleRepository,indefiniteArticleRepository);
         random = mock(Random.class);
-
+        autoCloseable = MockitoAnnotations.openMocks(this);
+        articleService = new ArticleService(definiteArticleRepository,indefiniteArticleRepository,random);
     }
 
     @AfterEach
@@ -71,6 +70,31 @@ class ArticleServiceTest {
         assertTrue(actualArticles.containsAll(definiteArticles));
         verify(definiteArticleRepository).findAll();
         verify(indefiniteArticleRepository, never()).findAll();
+    }
 
+    @Test
+    void getRandomArticlesWhenRandomNumberIs1() {
+        when(random.nextInt(3)).thenReturn(1);
+        List<IndefiniteArticle> indefiniteArticles = new ArrayList<>();
+        indefiniteArticles.add(new IndefiniteArticle());
+        when(indefiniteArticleRepository.findAll()).thenReturn(indefiniteArticles);
+
+        List<Article> actualArticles = articleService.getRandomArticles();
+
+        assertEquals(indefiniteArticles.size(), actualArticles.size());
+        assertTrue(actualArticles.containsAll(indefiniteArticles));
+        verify(indefiniteArticleRepository).findAll();
+        verify(definiteArticleRepository, never()).findAll();
+    }
+
+    @Test
+    void getRandomArticlesWhenRandomNumberIs2() {
+        when(random.nextInt(3)).thenReturn(2);
+
+        List<Article> actualArticles = articleService.getRandomArticles();
+
+        assertEquals(0, actualArticles.size());
+        verify(indefiniteArticleRepository,never()).findAll();
+        verify(definiteArticleRepository, never()).findAll();
     }
 }
