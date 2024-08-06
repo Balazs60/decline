@@ -13,9 +13,9 @@ public class NounService {
     private NounRepository nounRepository;
     private Random random;
 
-    public NounService(NounRepository nounRepository) {
+    public NounService(NounRepository nounRepository,Random random) {
         this.nounRepository = nounRepository;
-        this.random = new Random();
+        this.random = random;
     }
 
     public List<Noun> getAllNoun(){

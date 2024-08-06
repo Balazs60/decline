@@ -17,10 +17,12 @@ public class ArticleService {
 
     private DefiniteArticleRepository definiteArticleRepository;
     private IndefiniteArticleRepository indefiniteArticleRepository;
+    private Random random;
 
-    public ArticleService(DefiniteArticleRepository definiteArticleRepository, IndefiniteArticleRepository indefiniteArticleRepository) {
+    public ArticleService(DefiniteArticleRepository definiteArticleRepository, IndefiniteArticleRepository indefiniteArticleRepository,Random random) {
         this.definiteArticleRepository = definiteArticleRepository;
         this.indefiniteArticleRepository = indefiniteArticleRepository;
+        this.random = random;
     }
 
     public List<IndefiniteArticle> getInDefiniteArticles() {return indefiniteArticleRepository.findAll();}
@@ -52,7 +54,6 @@ public class ArticleService {
     public List<Article> getRandomArticles(){
         List<Article> randomArticles = new ArrayList<>();
 
-        Random random = new Random();
         int randomNumber = random.nextInt(3);
 
         switch (randomNumber) {
