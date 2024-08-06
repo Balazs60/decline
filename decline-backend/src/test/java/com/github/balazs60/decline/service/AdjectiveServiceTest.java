@@ -1,5 +1,6 @@
 package com.github.balazs60.decline.service;
 
+import com.github.balazs60.decline.model.Case;
 import com.github.balazs60.decline.model.adjective.*;
 import com.github.balazs60.decline.repositories.AdjectiveRepository;
 import com.github.balazs60.decline.repositories.MixedAdjectiveDeclensionEndingsRepository;
@@ -71,6 +72,20 @@ class AdjectiveServiceTest {
 
     @Test
     void getCorrectAdjectiveEnding() {
+        List<AdjectiveDeclensionEndings> adjectiveDeclensionEndings = new ArrayList<>();
+        WeakAdjectiveDeclensionEndings mockedEnding = mock(WeakAdjectiveDeclensionEndings.class);
+        adjectiveDeclensionEndings.add(mockedEnding);
+        String originalArticle = "Der";
+        String inflectedArticle = "Der";
+        String caseType = "Nominative";
+        boolean hasTaskArticle = true;
+        boolean nounIsPlural = false;
+
+        when(adjectiveService.getPossibleAdjectiveEndings(inflectedArticle,hasTaskArticle)).thenReturn(adjectiveDeclensionEndings);
+        when(mockedEnding.getCorrectEndingOfAdjective(caseType,originalArticle,nounIsPlural)).thenReturn("e");
+
+       String correctArticle = adjectiveService.getCorrectAdjectiveEnding(caseType,inflectedArticle,originalArticle,hasTaskArticle,nounIsPlural);
+       assertEquals("e",correctArticle);
     }
 
     @Test

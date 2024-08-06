@@ -23,11 +23,12 @@ public class TaskService {
 
     public TaskService(NounService nounService,
                        AdjectiveService adjectiveService,
-                       ArticleService articleService) {
+                       ArticleService articleService,
+                       Random random) {
         this.nounService = nounService;
         this.adjectiveService = adjectiveService;
         this.articleService = articleService;
-        this.random = new Random();
+        this.random = random;
     }
 
     public Task createTask() {
