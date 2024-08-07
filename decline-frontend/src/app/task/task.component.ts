@@ -72,9 +72,9 @@ export class TaskComponent {
 
   checkAnswersChecked(): void {
     if (this.answersChecked) {
-      if (this.isLoggedIn) {
-        this.sendStatistic()
-      }
+      // if (this.isLoggedIn) {
+      //   this.sendStatistic()
+      // }
       this.fetchTask()
       
     } else {
@@ -83,6 +83,9 @@ export class TaskComponent {
   }
 
   checkAnswers(): void {
+    if (this.isLoggedIn) {
+      this.sendStatistic()
+    }
     this.answersChecked = true;
     this.articleValidationResult = this.articleAnswerValidator() ? 'Good' : 'Bad';
     this.adjectiveValidationResult = this.adjectiveAnswerValidator() ? 'Good' : 'Bad';
