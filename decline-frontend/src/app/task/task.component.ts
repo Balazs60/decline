@@ -49,6 +49,7 @@ export class TaskComponent {
   ngOnInit() {
     if(this.taskService.unsuccessfulTask){
       this.task = this.taskService.unsuccessfulTask
+
     } else {
       this.fetchTask();
     }
@@ -72,9 +73,6 @@ export class TaskComponent {
 
   checkAnswersChecked(): void {
     if (this.answersChecked) {
-      // if (this.isLoggedIn) {
-      //   this.sendStatistic()
-      // }
       this.fetchTask()
       
     } else {
