@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginComponent } from '../../login/login/login.component';
 import { LoginService } from '../../services/login.service';
+import { TasksService } from '../../services/tasks.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent {
    isLoggedIn: boolean = false;
    
 
-   constructor(private router: Router,private loginService: LoginService) {}
+   constructor(private router: Router,private loginService: LoginService, private taskService: TasksService) {}
 
    ngOnInit(): void {
     this.loginService.isLoggedIn.subscribe(loggedIn => {
@@ -30,6 +31,12 @@ export class HeaderComponent {
 
   handleLogin(): void {
     this.router.navigate(['/login']);
+  }
+
+  handleClickHomeButton(): void{
+    this.taskService.unsuccessfulTask = null;
+    this.router.navigate(['/'])
+
   }
    
 }
