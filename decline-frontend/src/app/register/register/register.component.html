@@ -1,50 +1,83 @@
 <div class="min-h-screen bg-gray-100 flex items-center justify-center">
-    <div *ngIf="isLoggedIn$ | async; else registrationFormSection" class="bg-white p-8 rounded-lg w-full max-w-md">
-      <button (click)="handleLogout()" class="bg-red-500 hover:bg-red-700 text-white p-2 rounded mt-4">
-        Logout
-      </button>
-    </div>
-    <ng-template #registrationFormSection>
-      <div class="bg-white p-8 rounded-lg w-full max-w-md">
-        <h1 class="text-2xl mb-4 text-center">Registration</h1>
-        <p class="mb-6 text-center">
-          Already have an account? <a routerLink="/login" class="text-teal-500">Log In</a>
-        </p>
-        <form [formGroup]="registrationForm" (ngSubmit)="register()" class="flex flex-col gap-4">
-          <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
-          <input
-            formControlName="username"
-            class="border rounded p-2"
-            type="text"
-            placeholder="Username"
-            required
-          />
-          <input
-            formControlName="email"
-            class="border rounded p-2"
-            type="email"
-            placeholder="Email"
-            required
-          />
-          <input
-            formControlName="password"
-            class="border rounded p-2"
-            type="password"
-            placeholder="Password"
-            required
-          />
-          <input
-            formControlName="passwordConfirm"
-            class="border rounded p-2"
-            type="password"
-            placeholder="Confirm Password"
-            required
-          />
-          <button type="submit" class="bg-teal-500 hover:bg-teal-700 text-white p-2 rounded mt-4">
-            Register
-          </button>
-        </form>
-      </div>
-    </ng-template>
+  <div *ngIf="isLoggedIn$ | async; else registrationFormSection" class="bg-white p-8 rounded-lg w-full max-w-md">
+    <button (click)="handleLogout()" class="bg-red-500 hover:bg-red-700 text-white p-2 rounded mt-4">
+      Logout
+    </button>
   </div>
-  
+
+  <ng-template #registrationFormSection>
+    <div class="bg-white p-8 rounded-lg w-full max-w-md">
+      <h1 class="text-2xl mb-4 text-center">Registration</h1>
+      <p class="mb-6 text-center">
+        Already have an account? <a routerLink="/login" class="text-teal-500">Log In</a>
+      </p>
+      <form  class="flex flex-col gap-4">
+        <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
+
+        <input
+          name="username"
+          [(ngModel)]="formData.username"
+          #username="ngModel"
+          class="border rounded p-2"
+          type="text"
+          placeholder="Username"
+          required
+        />
+        <div *ngIf="username.invalid && (username.touched || isFormSubmitted)" class="text-red-500">
+          Username is required.
+        </div>
+
+        <input
+          name="email"
+          [(ngModel)]="formData.email"
+          #email="ngModel"
+          class="border rounded p-2"
+          type="email"
+          placeholder="Email"
+          required
+          email
+        />
+        <div *ngIf="email.invalid && (email.touched || isFormSubmitted)" class="text-red-500">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+        </div>
+
+        <input
+          name="password"
+          [(ngModel)]="formData.password"
+          #password="ngModel"
+          class="border rounded p-2"
+          type="password"
+          placeholder="Password"
+          required
+          minlength="6"
+        />
+        <div *ngIf="password.invalid && (password.touched || isFormSubmitted)" class="text-red-500">
+          <div *ngIf="password.errors?.['required']">Password is required.</div>
+          <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</div>
+        </div>
+
+        <input
+          name="passwordConfirm"
+          [(ngModel)]="formData.passwordConfirm"
+          #passwordConfirm="ngModel"
+          class="border rounded p-2"
+          type="password"
+          placeholder="Confirm Password"
+          required
+        />
+        <div *ngIf="passwordConfirm.invalid && (passwordConfirm.touched || isFormSubmitted)" class="text-red-500">
+          Password confirmation is required.
+        </div>
+        <div *ngIf="formData.password !== formData.passwordConfirm && (passwordConfirm.touched || isFormSubmitted)" class="text-red-500">
+          Passwords do not match.
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" (click)="register()" class="bg-teal-500 hover:bg-teal-700 text-white p-2 rounded mt-4">
+          Register
+        </button>
+      </form>
+    </div>
+  </ng-template>
+</div>
