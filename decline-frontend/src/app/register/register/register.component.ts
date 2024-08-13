@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -36,19 +36,24 @@ export class RegisterComponent {
     this.isLoggedIn$ = this.loginService.isLoggedIn;
   }
 
-  register() {
+  register(form: NgForm) {
     // if (this.formData.password !== this.formData.passwordConfirm) {
     //   this.errorMessage = "Passwords do not match. Please make sure the passwords match.";
     //   return;
     // }
     this.isFormSubmitted = true;
-    if (!this.formData.username ||
-       !this.formData.email ||
-        !this.formData.password ||
-         !this.formData.passwordConfirm ||
-          this.formData.password !== this.formData.passwordConfirm) {
+    // if (!this.formData.username ||
+    //    !this.formData.email ||
+    //     !this.formData.password ||
+    //      !this.formData.passwordConfirm ||
+    //       this.formData.password !== this.formData.passwordConfirm) {
+    //   return;
+    // }
+
+    if(!form.form.valid || this.formData.password !== this.formData.passwordConfirm){
       return;
     }
+
     const registrationData: RegistrationData = {
       name: this.formData.username,
       email: this.formData.email,
