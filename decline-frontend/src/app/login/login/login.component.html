@@ -10,28 +10,28 @@
       <p class="mb-6 text-center">
         Don't have an account? <a [routerLink]="['/register']" class="text-teal-500">Register</a>
       </p>
-      <form [formGroup]="loginForm" (ngSubmit)="login()" class="flex flex-col gap-4">
+      <form [formGroup]="loginForm"  class="flex flex-col gap-4">
         <div *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</div>
         
-        <!-- Username field -->
-        <label for="username">Username</label>
-        <input id="username" type="text" formControlName="userName" 
-               [ngClass]="{'border-red-500': loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched}">
-        <div *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="text-red-500">
-          Username is required.
-        </div>
-        
-        <!-- Password field -->
-        <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" 
-               [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
-        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500">
-          Password is required.
-        </div>
+  <!-- Username field -->
+<label for="username">Username</label>
+<input id="username" type="text" formControlName="userName" 
+       [ngClass]="{'border-red-500': loginForm.get('userName')?.invalid && (isFormSubmitted || loginForm.get('userName')?.touched)}">
+<div *ngIf="loginForm.get('userName')?.invalid && (isFormSubmitted || loginForm.get('userName')?.touched)" class="text-red-500">
+  Username is required.
+</div>
+
+<!-- Password field -->
+<label for="password">Password</label>
+<input id="password" type="password" formControlName="password" 
+       [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && (isFormSubmitted || loginForm.get('password')?.touched)}">
+<div *ngIf="loginForm.get('password')?.invalid && (isFormSubmitted || loginForm.get('password')?.touched)" class="text-red-500">
+  Password is required.
+</div>
+
         
         <!-- Submit button -->
-        <button type="submit" class="bg-teal-500 hover:bg-teal-700 text-white p-2 rounded mt-4" 
-                [disabled]="loginForm.invalid">
+        <button type="button" (click)="login()" class="bg-teal-500 hover:bg-teal-700 text-white p-2 rounded mt-4" >
           Login
         </button>
       </form>
