@@ -4,6 +4,7 @@ package com.github.balazs60.decline.service;
 import com.github.balazs60.decline.config.JwtService;
 import com.github.balazs60.decline.controller.AuthenticationResponse;
 import com.github.balazs60.decline.controller.RegisterRequest;
+import com.github.balazs60.decline.exception.EmptyInputException;
 import com.github.balazs60.decline.model.members.Member;
 import com.github.balazs60.decline.model.members.Role;
 import com.github.balazs60.decline.repositories.MemberRepository;
@@ -22,14 +23,22 @@ public class AuthenticationService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private  final JwtService jwtService;
+    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final MemberDetailsService memberDetailsService;
+
     public AuthenticationResponse register(RegisterRequest request) {
 
-        List<String> MemberNames=memberRepository.findAll().stream().map(member -> member.getName()).collect(Collectors.toList());
-        for (String name:MemberNames){
-            if(name.equals(request.getName())){
+        if (request.getName().length() == 0 ||
+                request.getEmail().length() == 0 ||
+                request.getPassword().length() == 0
+        ) {
+            throw new EmptyInputException("601", "Input field is empty");
+        }
+
+        List<String> MemberNames = memberRepository.findAll().stream().map(member -> member.getName()).collect(Collectors.toList());
+        for (String name : MemberNames) {
+            if (name.equals(request.getName())) {
                 System.out.println(("Mar can ilyen Member"));
                 return AuthenticationResponse.builder().token("fail").build();
             }
