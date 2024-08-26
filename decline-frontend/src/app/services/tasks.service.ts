@@ -10,7 +10,7 @@ export class TasksService {
 
   constructor(private apiService: ApiService) { }
 
-  unsuccessfulTask: Task = null!;
+  unsuccessfulTask: Task | null = null!;
 
   getTask = (url: string): Observable<Task> => {
     return this.apiService.get(url)

@@ -9,28 +9,35 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
-  loginForm = new FormGroup({
-    userName: new FormControl("",Validators.required),
-    password: new FormControl("",Validators.required),
-  })
-
+  loginForm: FormGroup
+  isFormSubmitted: boolean = false;
   errorMessage: string = '';
-  isLoggedIn$: Observable<boolean>; 
+  isLoggedIn$: Observable<boolean>;
 
   constructor(private loginService: LoginService, private router: Router) {
+    this.loginForm = new FormGroup({
+      userName: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required),
+    })
     this.isLoggedIn$ = this.loginService.isLoggedIn;
 
-   }
+  }
 
 
 
   login() {
+    this.isFormSubmitted = true;
+
+    if (!this.loginForm.valid) {
+      return;
+    }
+    
     const loginData: LoginData = {
       name: this.loginForm.value.userName!,
       password: this.loginForm.value.password!,
@@ -41,7 +48,7 @@ export class LoginComponent {
       .subscribe({
         next: (data) => {
           if (data.token) {
-            this.loginService.setLoggedIn(data.token,loginData.name)
+            this.loginService.setLoggedIn(data.token, loginData.name)
             this.router.navigate(['/']);
           } else {
             this.errorMessage = 'Authentication failed. Please check your credentials.';
@@ -50,7 +57,8 @@ export class LoginComponent {
         error: (error) => {
           this.errorMessage = 'Authentication failed. Please check your credentials.';
           console.error(error);
-        }      })
+        }
+      })
   }
 
   handleLogout() {
