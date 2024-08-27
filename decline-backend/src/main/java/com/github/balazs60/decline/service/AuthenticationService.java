@@ -5,6 +5,7 @@ import com.github.balazs60.decline.config.JwtService;
 import com.github.balazs60.decline.controller.AuthenticationResponse;
 import com.github.balazs60.decline.controller.RegisterRequest;
 import com.github.balazs60.decline.exception.EmptyInputException;
+import com.github.balazs60.decline.exception.PasswordNotValidException;
 import com.github.balazs60.decline.model.members.Member;
 import com.github.balazs60.decline.model.members.Role;
 import com.github.balazs60.decline.repositories.MemberRepository;
@@ -34,6 +35,8 @@ public class AuthenticationService {
                 request.getPassword().length() == 0
         ) {
             throw new EmptyInputException("601", "Input field is empty");
+        } else if(request.getPassword().length() > 0 && request.getPassword().length() < 6){
+            throw new PasswordNotValidException("400", "Wrong password format");
         }
 
         List<String> MemberNames = memberRepository.findAll().stream().map(member -> member.getName()).collect(Collectors.toList());

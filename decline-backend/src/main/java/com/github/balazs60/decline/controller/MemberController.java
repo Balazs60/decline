@@ -21,26 +21,14 @@ public class MemberController {
 
     @PatchMapping("/member/statistic")
     public ResponseEntity<Void> UpdateStatistic(@RequestBody AnswerDataDto answerDataDto) {
-        try {
-            memberService.addAnswerData(answerDataDto);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            System.out.println("error");
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        memberService.addAnswerData(answerDataDto);
+        return ResponseEntity.ok().build();
     }
+
     @GetMapping("/member/statistic/{userName}")
     public AnswerStatisticDto getStatisticByUserName(@PathVariable String userName) {
-        AnswerStatisticDto answerStatisticDto = memberService.getStatisticByUserName(userName);
-        // Add this line to log the JSON response
-        try {
-            String jsonResponse = new ObjectMapper().writeValueAsString(answerStatisticDto);
-            System.out.println("JSON Response: " + jsonResponse);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
 
+        AnswerStatisticDto answerStatisticDto = memberService.getStatisticByUserName(userName);
         return answerStatisticDto;
     }
 }

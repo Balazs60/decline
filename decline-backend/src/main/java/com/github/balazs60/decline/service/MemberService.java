@@ -2,6 +2,7 @@ package com.github.balazs60.decline.service;
 
 import com.github.balazs60.decline.dto.AnswerDataDto;
 import com.github.balazs60.decline.dto.AnswerStatisticDto;
+import com.github.balazs60.decline.exception.UserNotFoundException;
 import com.github.balazs60.decline.model.UnSuccessfulTask;
 import com.github.balazs60.decline.repositories.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class MemberService {
 
     public void addAnswerData(AnswerDataDto answerDataDto) {
         Member member = memberRepository.findMemberByName(answerDataDto.getMemberName());
+        if(member == null){
+            throw new UserNotFoundException("404","User not found");
+        }
         if (!answerDataDto.isAnswerCorrect()) {
             handleAnswerNotCorrect(answerDataDto, member);
         } else {
@@ -39,6 +43,9 @@ public class MemberService {
     public AnswerStatisticDto getStatisticByUserName(String userName) {
         AnswerStatisticDto answerStatisticDto = new AnswerStatisticDto();
         Member member = memberRepository.findMemberByName(userName);
+        if(member == null){
+            throw new UserNotFoundException("404","User not found");
+        }
         answerStatisticDto.setNumberOfWrongAnswers(member.getNumberOfWrongAnswers());
         answerStatisticDto.setNumberOfGoodAnswers(member.getNumberOfGoodAnswers());
         answerStatisticDto.setUnSuccessfulTasks(member.getUnSuccessfulTasks());
