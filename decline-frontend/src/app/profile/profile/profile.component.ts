@@ -43,6 +43,6 @@ export class ProfileComponent {
   
   tryAgainTask(unSuccessfulTask: Task){
     this.taskService.unsuccessfulTask = unSuccessfulTask
-    this.router.navigate(['/'])
+    this.router.navigate(['task'])
   }
 }
