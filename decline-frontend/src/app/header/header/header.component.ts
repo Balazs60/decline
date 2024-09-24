@@ -35,8 +35,12 @@ export class HeaderComponent {
 
   handleClickHomeButton(): void{
     this.taskService.unsuccessfulTask = null;
-    this.router.navigate(['/'])
+    this.router.navigate(['task'])
 
+  }
+
+  handleClickLogo(): void {
+    this.router.navigate([''])
   }
    
 }

@@ -5,10 +5,15 @@ import { RegisterComponent } from './register/register/register.component';
 import { LoginComponent } from './login/login/login.component';
 import { ProfileComponent } from './profile/profile/profile.component';
 import { authGuard } from './services/guard/auth.guard';
+import { StartComponent } from './start/start.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: StartComponent
+  },
     {
-        path: '',
+        path: 'task',
         component: TaskComponent
       },
       {
