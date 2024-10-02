@@ -6,6 +6,7 @@ import com.github.balazs60.decline.controller.AuthenticationResponse;
 import com.github.balazs60.decline.controller.RegisterRequest;
 import com.github.balazs60.decline.exception.EmptyInputException;
 import com.github.balazs60.decline.exception.PasswordNotValidException;
+import com.github.balazs60.decline.exception.UserNameAlreadyExistException;
 import com.github.balazs60.decline.exception.UserNotFoundException;
 import com.github.balazs60.decline.model.members.Member;
 import com.github.balazs60.decline.model.members.Role;
@@ -43,8 +44,7 @@ public class AuthenticationService {
         List<String> MemberNames = memberRepository.findAll().stream().map(member -> member.getName()).collect(Collectors.toList());
         for (String name : MemberNames) {
             if (name.equals(request.getName())) {
-                System.out.println(("Mar can ilyen Member"));
-                return AuthenticationResponse.builder().token("fail").build();
+                throw new UserNameAlreadyExistException("409","Username already exist");
             }
         }
 
