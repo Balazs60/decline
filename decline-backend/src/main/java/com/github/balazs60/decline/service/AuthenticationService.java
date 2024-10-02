@@ -6,6 +6,7 @@ import com.github.balazs60.decline.controller.AuthenticationResponse;
 import com.github.balazs60.decline.controller.RegisterRequest;
 import com.github.balazs60.decline.exception.EmptyInputException;
 import com.github.balazs60.decline.exception.PasswordNotValidException;
+import com.github.balazs60.decline.exception.UserNotFoundException;
 import com.github.balazs60.decline.model.members.Member;
 import com.github.balazs60.decline.model.members.Role;
 import com.github.balazs60.decline.repositories.MemberRepository;
@@ -62,13 +63,21 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(RegisterRequest request) {
+
+        if (request.getName().isEmpty() || request.getPassword().isEmpty()) {
+            throw new EmptyInputException("601", "Input field is empty");
+        }
+        var user = memberRepository.findMemberByName(request.getName());
+
+        if (user == null) {
+            throw new UserNotFoundException("404","User not found with this name");
+        }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getName(),
                         request.getPassword()
                 )
         );
-        var user = memberRepository.findMemberByName(request.getName());
         var jwtToken = jwtService.generateToken(memberDetailsService.loadUserByUsername(user.getName()));
         return AuthenticationResponse.builder()
                 .token(jwtToken)
