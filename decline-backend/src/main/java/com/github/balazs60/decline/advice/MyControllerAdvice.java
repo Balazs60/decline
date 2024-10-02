@@ -2,11 +2,10 @@ package com.github.balazs60.decline.advice;
 
 import com.github.balazs60.decline.exception.EmptyInputException;
 import com.github.balazs60.decline.exception.PasswordNotValidException;
+import com.github.balazs60.decline.exception.UserNameAlreadyExistException;
 import com.github.balazs60.decline.exception.UserNotFoundException;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,5 +23,9 @@ public class MyControllerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserIsNotFound(UserNotFoundException userNotFoundException){
         return  new ResponseEntity<>("User not found with this name", HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(UserNameAlreadyExistException.class)
+    public ResponseEntity<String> handleUserNameAlreadyExist(UserNameAlreadyExistException userNameAlreadyExistException){
+        return new ResponseEntity<>("Username already exist",HttpStatus.CONFLICT);
     }
 }
